@@ -1,0 +1,24 @@
+\FloatBarrier
+\subsection{Silhouette Score}
+\label{subsec:silhouette-score}
+
+The Silhouette Score, introduced by Rousseeuw \cite{rousseeuwRousseeuwSilhouettesGraphical1987}, evaluates clustering quality by quantifying how well objects match their own clusters compared to other clusters.
+
+For each point \( i \), let \( a(i) \) be the average distance to all other points in the same cluster, and \( b(i) \) be the average distance to all points in the nearest different cluster. The Silhouette Score for point \( i \) is:
+
+\begin{equation}
+    s(i) = \frac{b(i) - a(i)}{\max\{a(i), b(i)\}},
+    \label{eq:silhouette-score}
+\end{equation}
+where \( -1 \leq s(i) \leq 1 \). A high \( s(i) \) indicates that the point is well-matched to its own cluster and poorly matched to other clusters.
+
+The overall Silhouette Score is the mean of the scores for all points, with higher scores indicating better-defined clusters. This metric robustly evaluates clustering performance, ensuring meaningful and interpretable groupings.
+
+\begin{table}[h]
+    \centering
+    \input{figures/motion-capture-data/cluster-silhouette}
+    \caption{Silhouette Scores for K-Medoids Clustering}
+    \label{tab:silhouette-scores}
+\end{table}
+
+In Table \ref{tab:silhouette-scores}, we present the Silhouette Scores for K-Medoids clustering on the motion capture data (see Table \ref{tab:k-medoids-motion-capture}). The scores indicate that the reparameterization method has a higher score (0.115) compared to the logarithmic signature method (0.072). Additionally, the scores significantly increase when the dimensionality of the data is reduced, reaching 0.791 and 0.751 when utilizing reparameterization and logarithmic signature, respectively. This suggests that clustering is more well-defined when the data is reduced.

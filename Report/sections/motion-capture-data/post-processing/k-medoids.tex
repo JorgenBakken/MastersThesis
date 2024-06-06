@@ -1,0 +1,37 @@
+\subsection{K-Medoids Clustering}
+\label{subsec:kmedoids-clustering}
+
+Given that we are working with a distance matrix, we aim to categorize data using a rigorous method rather than relying solely on visual inspection. K-Medoids clustering, as described in the literature \cite{kaufmannClusteringMeansMedoids1987, schubertFastEagerKMedoids2021}, enables this by partitioning datasets into clusters based on pairwise distances. Given a distance matrix \( D = [d_{ij}]_{i,j=1}^{n} \), k-medoids are selected either randomly or heuristically, here chosen heuristically. Each point is assigned to the nearest medoid, forming clusters \( C_j \). Medoids are updated by selecting the point within each cluster that minimizes the total distance to all other points in the cluster, specifically
+
+\begin{equation}
+    m_j = \arg \min_{x \in C_j} \sum_{x_i \in C_j} d(x, x_i).
+    \label{eq:k-medoids-update}
+\end{equation}
+
+This process iterates until cluster assignments stabilize or changes fall below a threshold. Unlike K-Means, which uses centroids, K-Medoids relies on medoids because means cannot be computed from a distance matrix. The algorithm operates solely on pairwise distances, effectively generalizing K-Means for use with distance matrices.
+
+K-Medoids identifies clusters where points within the same cluster are more similar to each other than to points in different clusters. It retains the advantages of K-Means while being suitable for datasets where only pairwise distances are available, providing a robust and interpretable clustering method for rigorous mathematical analysis.
+
+In Table \ref{tab:k-medoids-motion-capture}, we present the results of K-Medoids clustering on the motion capture data. We applied this method to the distances created by reparameterization by dynamic programming search depth 10 and logarithmic signature with truncation level 3. This was done twice: once on the original distances and once on the reduced distances, where we used PCA combined with cosine similarity to reduce the dimensionality of the data (see Subsection \ref{subsec:pca-cosine}). The values have been mapped to facilitate comparison, as the clusters are not necessarily ordered in the same way, as the number assigned to each cluster is arbitrary.
+
+\begin{longtable}{lrrrr}
+    \caption{K-Medoids clustering on motion capture data} \label{tab:k-medoids-motion-capture} \\
+    \toprule
+    Motion & Reparam & LogSig & Reparam (Red) & LogSig (Red) \\
+    \midrule
+    \endfirsthead
+    
+    \toprule
+    Motion & Reparam & LogSig & Reparam (Red) & LogSig (Red) \\
+    \midrule
+    \endhead
+    
+    \bottomrule
+    \endfoot
+    
+    \bottomrule
+    \endlastfoot
+    
+    \input{figures/motion-capture-data/cluster}
+\end{longtable}
+

@@ -1,0 +1,42 @@
+\newpage
+\section{The Maurer–Cartan Form and The Right Logarithmic Derivative}
+\label{maurer-cartan-form-and-right-log-der}
+
+The 
+-Cartan form, denoted by \(\omega_g\), is a fundamental one-form \(\omega_g : T_gG \to \mathfrak{g}\) on the Lie group \(G\) as detailed in \cite[p.~373]{krieglConvenientSettingGlobal}. At any point \(g \in G\), it is defined via right translation by \(g^{-1}\), denoted as \(R_{g^{-1}}^*\), and is given by:
+
+\begin{align}
+    \omega_g : T_gG \rightarrow \mathfrak{g}, \nonumber \\
+    \omega_g = T_g(R_{g^{-1}}) = (R_{g^{-1}})^*,
+    \label{eq:maurer-cartan-form}
+\end{align}
+acting on any tangent vector \(X \in T_gG\) as:
+
+\begin{equation}
+    \omega_g(X) = (R_{g^{-1}})^*X \in \mathfrak{g}.
+    \label{eq:maurer-cartan-form-on-element}
+\end{equation}
+
+This form is right-invariant, linking the Lie algebra \(\mathfrak{g}\) to the group's structure, as noted in \cite[p.~71]{olverEquivalenceInvariantsSymmetry1995}.
+
+For a smooth curve \(c: I \to G\) with \(I \subset \mathbb{R}\) and \(c \in C^\infty\), the right logarithmic derivative \(\delta^r c\) is defined by \cite{krieglConvenientSettingGlobal} as:
+
+\begin{equation}
+    \delta^r c(t) = (\mathrm{R}_{c(t)^{-1}})^* \dot{c}(t),
+\end{equation}
+where \(\dot{c}(t)\) is the time derivative of the curve \(c\).
+
+In the general linear group \(\mathrm{GL}(n)\), with matrix multiplication as the group operation, the Cartan form is defined as follows:
+
+\begin{equation}
+    (R_g)_* (\dot{c}(t)) = \frac{d}{dt}(R_g \circ c(t)) = \frac{d}{dt}(c(t) \cdot g) = \dot{c}(t) \cdot g,
+    \label{eq:right-log-derivative-gl}
+\end{equation}
+where \(\cdot\) denotes matrix multiplication. Therefore, the right logarithmic derivative in \(\mathrm{GL}(n)\) is given by:
+
+\begin{equation}
+    \delta^r c(t) = (R_{c(t)^{-1}})_* (\dot{c}(t)) = \dot{c}(t) \cdot c(t)^{-1}.
+    \label{eq:maurer-cartan-gl}
+\end{equation}
+
+This effectively maps the tangent vector \(\dot{c}(t)\) at \(c(t)\) to the tangent space at the identity of \(\mathrm{GL}(n)\).

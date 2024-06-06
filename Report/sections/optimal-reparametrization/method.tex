@@ -1,0 +1,95 @@
+\section{Foundations for Discrete Reparameterization}
+\label{sec:foundation-for-discrete-reparametrization}
+
+Discrete reparameterization is a key technique in numerical analysis and applied mathematics, especially for interpolating curves and trajectories. This section covers the basics of discrete reparameterization, focusing on interpolating sequences of discrete points along a curve. We start by detailing the interpolation method, showing how discrete points are handled and how a continuous approximation is created.
+
+\subsection{Geodesic Interpolation}
+\label{subsec:geodesic-interpolation-discrete}
+
+The interpolation method in equation \eqref{eq:geodesic-interpolation} can be modified to handle a sequence of \(n\) discrete points along a curve. We define \(\{\bar{c}_k := c(s_k)\}_{k=0}^n\) as the sequence of elements, where \(\bar{c}_k\) corresponds to the timestamp \(s_k\), with \(0 = s_0 < s_1 < \cdots < s_n = 1\), where the interpolation function is given by:
+\begin{equation}
+    \tilde{c}(t) = \sum_{k=0}^{n-1} \chi_{[s_k, s_{k+1})}(t) \exp\left(\frac{t - s_k}{s_{k+1} - s_k} \log\left(\bar{c}_{k+1} \bar{c}_k^{-1}\right)\right) \bar{c}_k,
+    \label{eq:interpolation-discrete}
+\end{equation}
+and \(\chi_{[s_k, s_{k+1})}(t)\) is an activation function defined by:
+\begin{equation}
+    \chi_{[s_k, s_{k+1})}(t) = 
+    \begin{cases} 
+    1 & \text{if } t \in [s_k, s_{k+1}), \\
+    0 & \text{otherwise}.
+    \end{cases}
+    \label{eq:activation-discrete}
+\end{equation}
+
+The function \(\chi\) ensures that each segment \(\kappa\) of the curve \(\bar{c}\) contributes only within its designated interval, providing a continuous approximation of \(\bar{c}\) through \(\tilde{c}(t)\). For each segment \(\kappa\) on the interval \([s_k, s_{k+1})\), the interpolation is detailed as:
+\begin{equation}
+    \kappa(t) = \exp\left((t - s_k)\eta_k\right)\bar{c}_k,
+    \label{eq:interpolation-curve-segment}
+\end{equation}
+where \(\eta_k\) is computed by:
+\begin{equation}
+    \eta_k = \frac{\log(\bar{c}_{k+1} \bar{c}_k^{-1})}{s_{k+1} - s_k}.
+    \label{eq:eta}
+\end{equation}
+
+For a curve in a matrix group, the right logarithmic derivative \(\delta^r(\kappa(t))\), derived from the Maurer-Cartan form equation \eqref{eq:maurer-cartan-gl}, is:
+\begin{equation}
+    \begin{split}
+        \delta^r(\kappa(t)) &= \dot{\kappa}(t) \kappa(t)^{-1} \\
+        &= \eta_k \exp\left((t - s_k)\eta_k\right)\bar{c}_k \left(\eta_k \exp\left((t - s_k)\eta_k\right)\bar{c}_k\right)^{-1} \\
+        &= \eta_k \exp\left((t - s_k)\eta_k\right) \exp\left((t - s_k)\eta_k\right)^{-1} \\
+        &= \eta_k,
+    \end{split}
+    \label{eq:right-log-der-disc}
+\end{equation}
+which shows that the right logarithmic derivative remains constant over each interval \([s_k, s_{k+1})\).
+
+\subsection{Curve Reparameterization}
+\label{subsec:curve-reparameterization}
+
+Consider a discrete curve \(\bar{c}\) defined over the interval \(I\). The reparameterization of \(\bar{c}\) involves applying a diffeomorphism \(\varphi \in \mathrm{Diff}^{+}(I)\). This process results in a new curve, denoted \(\bar{c}_{\varphi}\).
+
+For each parameter \(s_i\) corresponding to the points of \(\bar{c}\), the diffeomorphism \(\varphi\) transforms these parameters according to:
+\begin{equation}
+    \hat{s}_i = \varphi(s_i), \quad i = 0, 1, \dots, n. 
+\end{equation}
+
+The reparameterized curve \(\bar{c}_{\varphi}\) is constructed by evaluating the continuous approximation of \(\bar{c}\), denoted \(\tilde{c}\), at the transformed parameters \(\hat{s}_i\). This is in accordance with the interpolation equation \eqref{eq:interpolation-discrete}, leading to:
+\begin{equation}
+    \bar{c}_{\varphi, i} = \tilde{c}(\hat{s}_i), \quad i = 0, 1, \dots, n.
+\end{equation}
+
+\subsection{SRVT}
+\label{subsec:srvt}
+
+Given a curve segment \( \kappa \) as in equation \eqref{eq:interpolation-curve-segment}, its SRVT, denoted \( \bar{q}_k \), is computed using \eqref{eq:eta} and \eqref{eq:right-log-der-disc}. The SRVT for a curve segment is defined as:
+\begin{equation}
+    \bar{q}_k = \frac{\delta^r(\kappa)}{\sqrt{\|\delta^r(\kappa)\|}} = \frac{\eta_k}{\sqrt{\|\eta_k\|}}.
+    \label{eq:srvt-discrete}
+\end{equation}
+
+The SRVT for the entire curve \( \bar{c} \) at time \( t \) is given by:
+\begin{equation}
+    \mathcal{R}(\bar{c})(t) := \bar{q}(t) = \sum_{k=0}^{n-1} \chi_{[s_k, s_{k+1})}(t) \bar{q}_k,
+\end{equation}
+where \( \chi_{[s_k, s_{k+1})}(t) \) is the activation function defined in equation \eqref{eq:activation-discrete}.
+
+As established in Lemma 3.9 \cite{celledoniShapeAnalysisLie2016}, the inverse SRVT is crucial for reconstructing a curve from its SRVT representation. Specifically, the reconstruction of the curve's point \( \bar{c}_{k+1} \) from \( \bar{c}_k \) is facilitated by:
+\begin{equation}
+    \bar{c}_{k+1} = \exp\left(\|\bar{q}_k\| \bar{q}_k\right) \bar{c}_k,
+    \label{eq:srvt-inverse}
+\end{equation}
+where \( \bar{c}_0 = e \), and \( e \) denotes the identity element of the group.
+
+The step-by-step reconstruction of each segment \( k \), where \( 1 \leq k < n-1 \), unfolds as follows:
+
+\begin{align}
+    \bar c_{k+1} &= \exp\left((s_{k+1} - s_k) \| \bar{q}_k \| \bar{q}_k \right) \bar c_k \\
+    &= \exp\left( (s_{k+1} - s_k) \left\| \frac{\eta_k}{\sqrt{\| \eta_k \|}} \right\| \frac{\eta_k}{\sqrt{\| \eta_k \|}} \right) \bar c_k \\
+    &= \exp\left( \frac{s_{k+1} - s_k}{s_{k+1} - s_k} \log(\bar c_{k+1} \bar c_k^{-1}) \right) \bar c_k \\
+    &= \bar c_{k+1}.
+\end{align}
+This iterative approach effectively demonstrates how the inverse SRVT enables the sequential recovery of \( \bar{c}_{k+1} \) from \( \bar{c}_k \), thereby enabling the comprehensive reconstruction of \( \bar{c} \) from \( \bar{q} \).
+
+
+

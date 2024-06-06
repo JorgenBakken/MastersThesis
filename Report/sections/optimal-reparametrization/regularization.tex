@@ -1,0 +1,37 @@
+\subsection{Regularization}
+\label{chap:regularization}
+
+% To address potential non-uniqueness in the solution obtained from the local cost functional \eqref{eq:local-cost-functional}, we introduce regularization terms that ensure uniqueness and provide control over the solution's properties. We consider three forms of regularization: the L1 norm, the L2 norm, and a penalty for deviation from the original parameterization.
+
+% The L1 regularization encourages sparsity and smoothness in the transformation. It is expressed as 
+
+% \begin{equation}
+%     \lambda \sum_{k < s_m \leq i} \left| \mathcal{R}(c_2 \circ \varphi_{k,l;i,j})(s_m) \right|, 
+%     \label{eq:reg-l1}
+% \end{equation}
+
+% where \(\lambda \in \mathbb{R}^+\) is a regularization parameter that encourages reducing the total variation of the curve.
+
+% In contrast, the L2 regularization targets smoothness on a more global scale by penalizing the squared magnitude of the square root velocity transform (SRVT) of \(c_2\) post-transformation. It is formulated as 
+
+% \begin{equation}
+%     \lambda \sum_{k < s_m \leq i} \left| \mathcal{R}(c_2 \circ \varphi_{k,l;i,j})(s_m) \right|^2,
+%     \label{eq:reg-l2}
+% \end{equation} 
+
+% where the squared terms enforce global smoothness in the transformation.
+
+% Furthermore, a penalty for deviating from the initial parameterization minimizes changes from the curve's original form. This is represented by 
+
+% \begin{equation}
+%     \lambda \sum_{k < s_m \leq i} \left| \varphi_{k,l;i,j}(s_m) - s_m \right|^2. 
+%     \label{eq:reg-perturbation}
+% \end{equation}
+
+% Given that real-world data inherently contains noise, theoretically identical curves may not measure zero distance due to such variations. In general,
+
+% \begin{equation*}
+%     c_2 = c_1 \circ \varphi + \epsilon, 
+% \end{equation*}
+
+% where \(\varphi \in \text{Diff}^+(I)\) represents the diffeomorphism and \(\epsilon\) is a small noise component. Here, regularization not only aids in identifying a unique solution but also guides it toward better global behavior, such as the smoother transformations achieved through L1 regularization, which minimizes the curve's total variation.

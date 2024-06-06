@@ -1,0 +1,71 @@
+\chapter{3D Pendulum Dynamics}
+\label{chap:Pendulum}
+
+This chapter discusses the dynamics of a 3D pendulum, modeled as a rigid body consisting of a massless rod and a point mass. This system provides a practical example of rigid body dynamics under the influence of gravity. The analysis is simplified by assuming the rod is rigid and massless except at its end where the point mass \(m_b\) is located.
+
+\section{Mathematical Formulation}
+The pendulum is characterized by its length \(l\) and point mass \(m_b\). The moment of inertia for such a configuration, assuming the mass is concentrated at a distance \(l\) from the pivot, is given by \(I = m_b l^2\). The inertia tensor for rotational motion about any axis through the pivot point is then:
+\[
+\mathcal{I} = \text{diag}(I, I, I)
+\]
+where \(\text{diag}(I, I, I)\) represents a diagonal matrix with \(I\) repeated along the diagonal.
+
+The equations of motion for the pendulum are governed by the following system of differential equations:
+\begin{equation}
+    \begin{aligned}
+        \dot{m} &= m \times \omega + \tau, \\
+        \dot{R} &= R \hat{\omega},
+    \end{aligned}   
+\end{equation}
+where \(m\) is the angular momentum, \(\omega\) is the angular velocity, and \(R\) is the rotation matrix describing the orientation of the pendulum in the fixed frame.
+
+\subsection{Definitions and Dynamics}
+\begin{itemize}
+    \item \(\omega := \mathcal{I}^{-1}m\) defines the angular velocity as the product of the inverse of the inertia tensor and the angular momentum.
+    \item The torque \(\tau\) induced by gravity is defined as:
+    \[
+    \tau = m_b \cdot g \cdot (\rho \times R^T e_3)
+    \]
+    where:
+    \begin{itemize}
+        \item \(m_b\) is the mass of the point mass,
+        \item \(g\) is the acceleration due to gravity,
+        \item \(\rho = (0, 0, l)\) is the vector from the pivot to the center of mass, aligned along the rod,
+        \item \(e_3 = (0, 0, 1)\) is the unit vector in the upward z-direction,
+        \item \(R^T e_3\) represents the projection of the global z-axis onto the body frame, effectively mapping how the gravitational force interacts with the pendulum in its current orientation.
+    \end{itemize}
+    \item The equation \(\dot{R} = R \hat{\omega}\) describes how the rotation matrix evolves over time, where \(\hat{\omega}\) is the skew-symmetric matrix formed from the angular velocity vector \(\omega\).
+\end{itemize}
+
+\begin{algorithm}
+\caption{RK4 step for 3D Pendulum Dynamics}
+\begin{algorithmic}[1]
+\Require $m \in \mathbb{R}^3$: Initial angular momentum
+\Require $R \in \mathbb{R}^{3 \times 3}$: Initial rotation matrix
+\Require $h \in \mathbb{R}$: Time step
+\Require $g, m_b \in \mathbb{R}$: Gravity, mass of pendulum
+\Require $e_3 \in \mathbb{R}^3$: Unit vector in the z-direction
+
+\Function{f}{$m, R, g, m_b, e_3$}
+    \State $\omega \gets \mathcal{I}^{-1}m$
+    \State $\tau \gets m_b \cdot g \cdot (\rho \times R^T e_3)$
+    \State $\dot{m} \gets m \times \omega + \tau$
+    \State $\dot{R} \gets R \hat{\omega}$
+    \State \Return $\dot{m}, \dot{R}$
+\EndFunction
+
+\Function{RK4\_step}{$m, R, h, g, m_b, e_3$}
+    \State $(k1_m, k1_R) \gets f(m, R, g, m_b, e_3)$
+    \State $(k2_m, k2_R) \gets f(m + \frac{h}{2} \cdot k1_m, R \cdot \exp(\frac{h}{2} \cdot \text{hat}(k1_R)), g, m_b, e_3)$
+    \State $(k3_m, k3_R) \gets f(m + \frac{h}{2} \cdot k2_m, R \cdot \exp(\frac{h}{2} \cdot \text{hat}(k2_R)), g, m_b, e_3)$
+    \State $(k4_m, k4_R) \gets f(m + h \cdot k3_m, R \cdot \exp(h \cdot \text{hat}(k3_R)), g, m_b, e_3)$
+    \State $m \gets m + \frac{h}{6} \cdot (k1_m + 2 \cdot k2_m + 2 \cdot k3_m + k4_m)$
+    \State $R \gets R \cdot \exp(\frac{h}{6} \cdot (\text{hat}(k1_R) + 2 \cdot \text{hat}(k2_R) + 2 \cdot \text{hat}(k3_R) + \text{hat}(k4_R)))$
+    \State \Return $m, R$
+\EndFunction
+
+
+
+\end{algorithmic}
+\end{algorithm}
+    

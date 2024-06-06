@@ -1,0 +1,16 @@
+\begin{algorithm}
+\caption{Optimal Reparameterization via Dynamic Programming}
+\begin{algorithmic}[1]
+\Require $c_1, c_2$: Curves, $I_1, I_2 \in \mathbb{R}$: Initial parameterizations
+\Function{OptimizeReparam}{$c_1, c_2, I_1, I_2$}
+    \State $(I, c_1', c_2') \gets \text{AlignCurves}(c_1, c_2, I_1, I_2)$
+    \State $(c_{1,e}', c_{2,e}') \gets \text{MoveStartToIdentity}(c_1', c_2')$ \Comment{\eqref{eq:maurer-cartan-gl}}
+    \State $(q_1, q_2) \gets \text{vee}(\text{SRVT}(c_{1,e}', c_{2,e}'))$ \Comment{\eqref{eq:srvt-discrete}, \eqref{eq:vee_SO3}, \eqref{eq:vee_SE3}}
+    \State $A, P \gets \text{ComputeCostMatrix}(q_1, q_2)$  \Comment{\eqref{eq:cost-matrix}}
+    \State $\text{path} \gets \text{TraceOptimalPath}(P)$ 
+    \State $I_{2, opt} \gets \text{LinearInterpolate}(\text{path}_x, \text{path}_y)(I_2)$ 
+    \State $c_{2, opt} \gets \text{Interpolate}(I_{2}, I_{2, opt})(c_2)$  \Comment{\eqref{eq:interpolation-discrete}}
+    \State \Return $(c_{2, opt}, I_{2, opt})$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}

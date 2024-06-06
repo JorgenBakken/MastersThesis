@@ -1,0 +1,58 @@
+\documentclass[tikz, margin=0.1pt]{standalone}
+\usepackage{tikz} 
+\usepackage{pgfplots} % Include pgfplots package for plotting functions
+\usetikzlibrary{matrix}
+\pgfplotsset{compat=1.17} % Set compatibility level
+
+\begin{document}
+
+\begin{table}
+    \matrix[matrix of nodes, nodes={align=center}, row sep=2mm, column sep=4mm] (m) {
+        \node{Movement Type}; & \node{amc}; & \node{Start}; & \node{End}; \\
+        \node{Forward Jump}; & \node{16\_05.amc}; & \node{90}; & \node{220}; \\
+        \node{Forward Jump}; & \node{16\_06.amc}; & \node{200}; & \node{330}; \\
+        \node{Forward Jump}; & \node{16\_07.amc}; & \node{200}; & \node{330}; \\
+        \node{Forward Jump}; & \node{16\_09.amc}; & \node{240}; & \node{370}; \\
+        \node{Forward Jump}; & \node{16\_10.amc}; & \node{260}; & \node{390}; \\
+        \node{Forward Jump}; & \node{13\_11.amc}; & \node{190}; & \node{320}; \\
+        \node{Forward Jump}; & \node{13\_13.amc}; & \node{160}; & \node{290}; \\
+        \node{Forward Jump}; & \node{13\_19.amc}; & \node{205}; & \node{335}; \\
+        \node{Forward Jump}; & \node{13\_32.amc}; & \node{125}; & \node{255}; \\
+        \node{Run/Jog}; & \node{16\_45.amc}; & \node{0}; & \node{130}; \\
+        \node{Run/Jog}; & \node{16\_46.amc}; & \node{0}; & \node{130}; \\
+        \node{Run/Jog}; & \node{35\_26.amc}; & \node{0}; & \node{130}; \\
+        \node{Run/Jog}; & \node{35\_22.amc}; & \node{0}; & \node{130}; \\
+        \node{Run/Jog}; & \node{16\_35.amc}; & \node{0}; & \node{130}; \\
+        \node{Run/Jog}; & \node{16\_36.amc}; & \node{0}; & \node{130}; \\
+        \node{Run/Jog}; & \node{35\_18.amc}; & \node{0}; & \node{130}; \\
+        \node{Run/Jog}; & \node{02\_03.amc}; & \node{0}; & \node{130}; \\
+        \node{Run/Jog}; & \node{16\_56.amc}; & \node{0}; & \node{130}; \\
+        \node{Walk}; & \node{16\_16.amc}; & \node{0}; & \node{130}; \\
+        \node{Walk}; & \node{35\_12.amc}; & \node{0}; & \node{130}; \\
+        \node{Walk}; & \node{16\_58.amc}; & \node{0}; & \node{130}; \\
+        \node{Walk}; & \node{35\_32.amc}; & \node{0}; & \node{130}; \\
+        \node{Walk}; & \node{35\_11.amc}; & \node{0}; & \node{130}; \\
+        \node{Walk}; & \node{16\_21.amc}; & \node{0}; & \node{130}; \\
+        \node{Walk}; & \node{16\_22.amc}; & \node{0}; & \node{130}; \\
+        \node{Walk}; & \node{16\_15.amc}; & \node{40}; & \node{170}; \\
+        \node{Walk}; & \node{16\_31.amc}; & \node{40}; & \node{170}; \\
+        \node{Walk}; & \node{16\_47.amc}; & \node{40}; & \node{170}; \\
+        \node{Boxing}; & \node{13\_17.amc}; & \node{30}; & \node{160}; \\
+        \node{Boxing}; & \node{13\_18.amc}; & \node{30}; & \node{160}; \\
+        \node{Boxing}; & \node{14\_01.amc}; & \node{40}; & \node{170}; \\
+        \node{Boxing}; & \node{14\_02.amc}; & \node{40}; & \node{170}; \\
+        \node{Boxing}; & \node{14\_03.amc}; & \node{80}; & \node{210}; \\
+        \node{Boxing}; & \node{15\_13.amc}; & \node{80}; & \node{210}; \\
+        \node{Boxing}; & \node{17\_10.amc}; & \node{80}; & \node{210}; \\
+        \node{Boxing}; & \node{15\_04.amc}; & \node{22200}; & \node{22330}; \\
+        \node{Boxing}; & \node{15\_05.amc}; & \node{22400}; & \node{22530}; \\
+        \node{Climb Stairs}; & \node{13\_35.amc}; & \node{200}; & \node{330}; \\
+        \node{Climb Stairs}; & \node{13\_36.amc}; & \node{230}; & \node{360}; \\
+        \node{Climb Stairs}; & \node{13\_37.amc}; & \node{220}; & \node{350}; \\
+        \node{Climb Stairs}; & \node{13\_38.amc}; & \node{220}; & \node{350}; \\
+        \node{Climb Stairs}; & \node{14\_21.amc}; & \node{220}; & \node{350}; \\
+        \node{Climb Stairs}; & \node{14\_22.amc}; & \node{220}; & \node{350}; \\
+        \node{Climb Stairs}; & \node{14\_23.amc}; & \node{220}; & \node{350}; \\
+    };
+\end{table}
+\end{document}

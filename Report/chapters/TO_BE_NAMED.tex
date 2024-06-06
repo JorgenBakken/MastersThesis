@@ -1,0 +1,35 @@
+\chapter{Numerical Interpolation of Parametrized Curves in $SO(3)$}
+
+This chapter investigates the numerical interpolation of parametrized curves in the special orthogonal group $SO(3)$, focusing on computational methods to approximate these curves efficiently and accurately.
+
+Consider two parametrized curves $g$ and $h$ within $SO(3)$, both mapping from the interval $[0, 1]$ to $SO(3)$ and satisfying $g_0 = h_0 = e$, the identity element.
+
+The infinitesimal generators $\xi_j$ of the curve $g$ are defined through the logarithmic map:
+\begin{equation}
+\xi_j := \log(g_{j-1}^{-1} g_j), \quad j = 1, \dots, n
+\end{equation}
+The interpolated curve $g_h(t)$ is then defined on each subinterval $[t_{j-1}, t_j]$ by:
+\begin{equation}
+g_h(t) := g_{j-1} \exp\left(\frac{t - t_j}{h} \xi_j\right), \quad t \in [t_{j-1}, t_j], \quad h = t_j - t_{j-1}
+\end{equation}
+
+The differential equation is given by:
+\begin{equation}
+\dot{g}(t) = g(t) \xi(t), \quad g(0) = e, \quad t \in [0, 1]
+\end{equation}
+where $\xi(t)$ is a smooth curve in the Lie algebra $\mathcal{g}$ of $SO(3)$. The forward Lie-Euler method provides the approximation:
+\begin{equation}
+g_j = g_{j-1} \exp(h \xi_j), \quad j = 1, \dots, n
+\end{equation}
+
+To enhance the accuracy of the approximation, an optimization technique that reparameterizes the curve using an orientation-preserving map $\varphi: [0,1] \rightarrow [0,1]$ is employed. The objective functions are defined as follows:
+\begin{enumerate}
+    \item Manifold Objective Function:
+    \begin{equation}
+    C(t_\varphi) := \frac{T}{M+1} \sum_{j=0}^M \| \log(g_h(s_k)^{-1} g(s_k))\|_F^2
+    \end{equation}
+    \item Tangent Space Objective Function:
+    \begin{equation}
+    C(t_\varphi) := \frac{T}{M+1} \sum_{j=0}^M \| \xi_h(s_k) - \xi(s_k)\|_2^2
+    \end{equation}
+\end{enumerate}

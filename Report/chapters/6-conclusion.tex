@@ -1,0 +1,35 @@
+\chapter{Conclusion}
+\label{ch:conclusion}
+
+This thesis explored two techniques for reparameterization: the fully discretized method using the Square Root Velocity Transform (SRVT) with dynamic programming, and the geodesic interpolation method, where optimal nodes were determined using Sequential Least Squares Programming (SLSQP). The primary focus was on dynamic programming. Both methods showed promise in achieving optimal reparameterizations and effectively discretizing curves based on their geometric shapes. These techniques were applied to compute the shape space distance between curves, utilizing the normalized logarithmic signature of curves for the same purpose.
+
+We extended previous research by adapting these methodologies to the special Euclidean group (\(\mathrm{SE}(3)^n\)). Although we lacked real motion capture data for \(\mathrm{SE}(3)^n\), the methods were validated using synthetic data, indicating their potential utility.
+
+Our framework was further expanded to include post-processing steps. Dimensionality reduction techniques, specifically Principal Component Analysis (PCA) and Classical Multi-Dimensional Scaling (cMDS), were employed, followed by clustering using K-Medoids. Silhouette scores were calculated to quantify the clustering quality, highlighting the importance of post-processing in enhancing the discriminative capability of our data.
+
+Reparameterization proved particularly effective with motion capture data, discretizing five key moments identified in our study when post-processed. Although the logarithmic signature method was robust and faster, it was less effective. 
+
+A problem was identified when using the logarithmic signature on \(\mathrm{SE}(3)^n\) data due to discrepancies between the matrix norm and the vector norm in its vectorized form, which biased the results towards translation over rotation. 
+
+The post-processing phase was crucial in our analysis. By reducing the dimensionality of the data, we improved our ability to distinguish between different motions, facilitating effective clustering beyond mere visualization. This confirmed that data reduction enhances the classification of motion capture data. Silhouette scores further demonstrated the superiority of reparameterization utilizing SRVT over the logarithmic signature in terms of classification accuracy.
+
+\newpage
+\section*{Future Work}
+
+Given the time and scope constraints of this thesis, several areas remain unexplored. Future research could focus on the following:
+
+\begin{enumerate}
+    \item \textbf{Classification on \(\mathrm{SE}(3)^n\) Data:} Exploring real motion capture data utilizing \(\mathrm{SE}(3)^n\) and attempting classification on such data could be valuable, as our tools show promise for these applications.
+    
+    \item \textbf{Mathematical Properties of Motions:} Investigate mathematical properties of motions, particularly \(\hat{u}(t)\), under the assumption that motions can be described as:
+    \begin{equation*}
+        \frac{d}{dt} g(t) = g(t)\hat u(t),
+    \end{equation*}
+    where we assume we can remove the parameterization, this aligns with our initial goals for reparameterization using geodesic interpolation.
+    
+    \item \textbf{Pre- and Post-Processing Analysis:} A detailed examination of both pre-processing and post-processing techniques could yield significant insights and improvements, given their highlighted importance in our study.
+    
+    \item \textbf{Semi-Discretized Methods on Motion Capture Data:} By utilizing semi-discretized methods to motion capture data we could achieve better optimal reparameterization and more accurate classification, as previous research has shown promising results for these methods.
+    
+    \item \textbf{Theoretical Analysis:} A more thorough analysis of the theoretical foundations of our methods would enhance understanding and potentially improve their application.
+\end{enumerate}

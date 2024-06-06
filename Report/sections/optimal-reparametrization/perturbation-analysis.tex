@@ -1,0 +1,28 @@
+\subsection{Perturbation Analysis}
+
+We define the mapping \(V: \mathbb{R}^d \rightarrow \mathbb{R}^d\) by
+\[
+V(x) := \frac{x}{\sqrt{|x|}},
+\]
+where it is understood that \(V(0) = 0\). This mapping is continuous on \(\mathbb{R}^d\) and Hölder continuous with exponent \(\frac{1}{2}\).
+
+Given this, we consider a perturbation analysis in the context of the Square Root Velocity Transform (SRVT). Define a diffeomorphism \(\varphi: \mathbb{I} \rightarrow \mathbb{I}\) by
+\[
+\varphi(t) = t + \epsilon(t),
+\]
+where \(\epsilon(t)\) represents a small perturbation. It is necessary that \(\epsilon(t)\) is smooth and sufficiently small, ensuring \(\varphi'(t) = 1 + \epsilon'(t) > 0\), which implies \(\epsilon'(t) > -1\).
+
+For a smooth function \(f: [0,1] \rightarrow \mathbb{R}^d\) that is continuously differentiable, we define the SRVT of \(f\) and analyze the effect of perturbations through \(f \circ \varphi\). The difference between \(R(f)\) and \(R(f \circ \varphi)\) can be bounded as follows:
+\[
+\begin{aligned}
+\left| R(f) - R(f \circ \varphi) \right| &= \left| V(f') - V((f \circ \varphi)') \right| \\
+&\leq C \left| f' - (f \circ \varphi)' \right|^{\frac{1}{2}} \\
+&= C \left| f' - (f' + f'' \epsilon + \ldots)(1 + \epsilon') \right|^{\frac{1}{2}} \\
+&= C \left| f' \epsilon' + f'' \epsilon + \mathcal{O}(\epsilon^2) + \mathcal{O}(\epsilon'^2) + \mathcal{O}(\epsilon \epsilon') \right|^{\frac{1}{2}}.
+\end{aligned}
+\]
+Taking the \(L^2\) norm of this difference over the interval \([0,1]\), we find
+\[
+\int_0^1 \left| R(f) - R(f \circ \varphi) \right|^2 \,dt \leq C^2 \int_0^1 \left| f' \epsilon' + f'' \epsilon + \mathcal{O}(\epsilon^2) + \mathcal{O}(\epsilon'^2) + \mathcal{O}(\epsilon \epsilon') \right| \,dt.
+\]
+This shows that, for small perturbations, the convergence of the SRVT under perturbation is of order \(\mathcal{O}(\epsilon) + \mathcal{O}(\epsilon')\).

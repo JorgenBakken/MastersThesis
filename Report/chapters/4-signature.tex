@@ -1,0 +1,251 @@
+\chapter{Signature Method}   
+\label{ch:signature-method}
+
+This chapter delves into the intricacies of the signature method, a robust tool for analyzing paths and curves. We explore its fundamental concepts, including tensor algebra and the definition of the signature along with its properties. Additionally, we investigate the logarithmic signature for path representation. The chapter culminates with numerical examples illustrating the method's application in shape analysis.
+
+\section{Fundamentals of the Signature Method}
+\label{sec:signature-fundamentals}
+
+This section delves into the foundational aspects of the signature method, including tensor algebra, the definition of the signature, and its properties.
+
+\subsection{Tensor Algebra and Its Dual Space}
+\label{subsec:tensor-algebra}
+
+Within the context of a finite-dimensional vector space \(V\) with dimension \(d\), the tensor algebra \(T(V)\) encompasses all tensor powers of \(V\):
+\begin{equation}
+    T(V) := \bigoplus_{n=0}^{\infty} V^{\otimes n} = \mathbb{R} \oplus V \oplus (V \otimes V) \oplus (V \otimes V \otimes V) \oplus \cdots,
+\end{equation}
+where \(V^{\otimes n}\) denotes the \(n\)-th tensor product of \(V\) and \(V^{\otimes 0} = \mathbb{R}\) \cite{chenAlgebrasIteratedPath1971}.
+
+The dual space of the tensor algebra, denoted \(T((V)) := T(V)^*\) or \(T(V^*)\), represents the domain of formal power series in \(d\) non-commuting variables, represented by the set \(\{e_1, \ldots, e_d\}\) \cite{chenIntegrationPathsGeometric1957}.
+
+In a \(d\)-dimensional vector space, tensor series are depicted as infinite vectors indexed by words from the alphabet \(\{1, \ldots, d\}\). Each word \(w = i_1 \cdots i_n\), with \(i_j\) drawn from \(\{1, \ldots, d\}\), corresponds to a fundamental element \(e_w = e_{i_1} \otimes \cdots \otimes e_{i_n}\) \cite{chevyrevPrimerSignatureMethod2016}. This conceptual framework serves as the cornerstone for defining iterated integrals of a path in \(\mathbb{R}^d\).
+
+\subsection{Definition of the Signature}
+\label{subsec:signature-definition}
+
+For a smooth path \(x : [s, t] \to \mathbb{R}^d\) over \( [s, t] \subset [0, 1]\), the \(n\)-fold iterated integral for a word \(w = i_1 \cdots i_n\) is defined as:
+\begin{equation}
+\langle S(x)_{s,t}, e_w \rangle = \int_{s < u_n < \cdots < u_1 < t} dx_{u_1}^{i_1} \cdots dx_{u_n}^{i_n}.
+\end{equation}
+This provides geometric insights into the path \(x\) \cite{lyonsRoughPathsSignatures2014}.
+
+The signature \(S(x)_{s,t}\) of \(x\) over \( [s, t] \) is represented by the tensor series:
+\begin{equation}
+S(x)_{s,t} = 1 + \sum_{|w| \geq 1} \langle S(x)_{s,t}, e_w \rangle e_w \in T((\mathbb{R}^d)^*),
+\end{equation}
+aggregating its iterated integrals \cite{lyonsRadiusConvergenceLogarithmic2006}.
+
+To enhance computational efficiency, we truncate the signature at level \( n \), capturing terms up to word length \( n \). The truncated signature \( S(x)_{s,t}^{(n)} \) is given by:
+\begin{equation}
+S(x)_{s,t}^{(n)} = 1 + \sum_{1 \leq |w| \leq n} \langle S(x)_{s,t}, e_w \rangle e_w,
+\end{equation}
+where \( |w| \) represents the word length \cite{reizensteinCalculationIteratedIntegralSignatures2017}.
+
+The number of terms in \( S(x)_{s,t}^{(n)} \) is calculated as:
+\begin{equation}
+M = \frac{d(d^n - 1)}{d - 1},
+\label{eq:logsig-terms}
+\end{equation}
+where \(d\) is the path's dimension, crucial for balancing computational efficiency and information capacity \cite{reizensteinIisignatureLibraryEfficient2018}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Signatures on Piecewise Linear Paths}
+\label{subsec:signature-piecewise-linear}
+
+For linear paths in \(\mathbb{R}^d\), such as \(x(t) = a \cdot t + b\), the \(n\)-fold iterated integral for a word \(w = i_1 \cdots i_n\) simplifies to:
+\begin{equation}
+\langle S(x)_{s,t}, e_w \rangle = \frac{(t - s)^n}{n!} \prod_{k=1}^n a_{i_k}.
+\end{equation}
+
+Following prior work \cite{reizensteinCalculationIteratedIntegralSignatures2017, celledoniSignaturesShapeAnalysis2019}, the signature for a linear path is derived as:
+\begin{equation}
+S(x)_{s,t} = 1 + \sum_{|w|\geq 1} \frac{(t-s)^n}{n!} \prod^n_{k=1} a_{ik}e_w = \exp_{\otimes}((t-s)a).
+\label{eq:signature_linear}
+\end{equation}
+
+Applying Chen's Identity \cite{chenIteratedIntegralsExponential1954}, for a path \(x\) and \(0 \leq s \leq u \leq t \leq 1\), yields:
+\begin{equation}
+S(x)_{s,u} \otimes S(x)_{u,t} = S(x)_{s,t}.
+\label{eq:chens-rule}
+\end{equation}
+
+For a piecewise linear path, combining equation \eqref{eq:signature_linear} with \eqref{eq:chens-rule} results in the signature:
+\begin{equation}
+S(x)_{s,t} = \bigotimes_{k=1}^{m} \exp_{\otimes}(\Delta t_k a_k) = \exp_{\otimes}(\Delta t_1a_1) \otimes \dots \otimes \exp_{\otimes}(\Delta t_ma_m),
+\end{equation}
+where \(\Delta t_k = t_k - t_{k-1}\) represents the lengths of the time intervals, and \(a_1, \ldots, a_m\) are the slopes of the segments.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Signature for a Smooth Curve in a Lie Group}
+\label{subsec:signature-lie-group}
+
+Following \cite{celledoniSignaturesShapeAnalysis2019, leePathSignaturesLie2020}, for a smooth curve \( c: [0, 1] \to G \) in a Lie group \( G \), the \( n \)-fold iterated integral of the signature is defined recursively, with the base \(\langle S(c)_{s,t}, 1 \rangle := 1\) and the recursive step:
+
+\begin{equation}
+\langle S(c)_{s,t}, e_{i_1},\ldots,e_{i_n} \rangle := \int_{s}^{t} \langle S(c)_{s,u}, e_{i_1},\ldots,e_{i_{n-1}} \rangle \omega^{i_n}_{c(u)}( \dot{c}(u)) du,
+\end{equation}
+where \( \omega^{j}_{c}(v) \) denotes the \( j \)-th component of \( \omega_{c}(v) \in \mathfrak{g} \).
+
+For a smooth curve \( \kappa: [s_k, s_{k+1}] \to G \), where \( G = SO(3) \) or \( SE(3) \), representing the geodesic interpolation between configurations \( c_k \) and \( c_{k+1} \), the term \( \tilde{\eta}_k \) is defined as:
+
+\begin{equation}
+\tilde{\eta}_k = \frac{\log(c_{k+1}c_k^{-1})}{s_{k+1} - s_k},
+\end{equation}
+and the right logarithmic derivative \( \omega_\kappa (\dot \kappa)(t) = \hat{\eta}_k \) is formulated accordingly. Utilizing \( \eta_k \in \mathfrak{g} \), derived from the inverse hat map, the \( n \)-fold integrals for the signature of \( \kappa \) are given by:
+
+\begin{equation}
+\langle S(\kappa)_{s_k,s_{k+1}}, e_{i_1,\ldots,i_n} \rangle = \frac{(s_{k+1} - s_k)^n}{n!} \prod_{j=1}^n \eta_{k}^{i_j},
+\end{equation}
+for each appropriate index set. Consequently, the signature over the interval \( [s_k, s_{k+1}) \) is:
+
+\begin{equation}
+S(\kappa)_{s_k,s_{k+1}} = \exp_{\otimes}\left( (s_{k+1} - s_k) \tilde{\eta}_k \right).
+\label{eq:signature_lie_group}
+\end{equation}
+
+This methodology extends to paths in Lie groups such as \( SO(3)^d \) and \( SE(3)^d \), by adapting the index set and employing Chen’s rule for concatenation.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Properties of Signature Space for Paths}
+\label{subsec:signature-properties}
+
+In the signature space of a path \(x : [0,1] \to \mathbb{R}^d\), the identity is \(S(x)_{s,s} = 1\), and its inverse is \(S_{s,t}^{-1}(x) = S_{s,t}(\overleftarrow{x})\), where \(\overleftarrow{x}(t) = x(1 - t)\) \cite{chevyrevPrimerSignatureMethod2016}. This inverse relationship is captured by Chen's identity:
+
+\begin{equation}
+S(x) \otimes S(\overleftarrow{x}) = 1.
+\label{eq:chens-identity}
+\end{equation}
+
+Chen's rule indicates that the signature acts as a homomorphism from the path space under concatenation to the dual tensor algebra \cite{chenIntegrationPathsFaithful1958}. For paths \(x, y : [0,1] \rightarrow \mathbb{R}^d\), their concatenation \(x*y\) satisfies:
+
+\begin{equation}
+S(x*y)_{0,1} = S(x)_{0,1} \otimes S(y)_{0,1}
+\end{equation}
+
+Consequently, the identity for concatenation is:
+
+\begin{equation}
+S(x*\overleftarrow{x})_{0,1} = 1.
+\end{equation}
+
+For the concatenation of two paths \(c_1, c_2 : [0,1] \rightarrow G\), denoted \(c_1 * c_2\), where \(G\) represents a Lie group, the homomorphism property is preserved:
+
+\begin{equation}
+    S(c_1 * c_2)_{s,t} = S(c_1)_{s,t} \otimes S(c_2)_{s,t}.
+\end{equation}
+
+Parameterization invariance in concatenation allows for flexibility in choosing a midpoint within the interval \((0,1)\).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Uniqueness of the Path Signature}
+\label{subsec:uniqueness-signature}
+
+The path signature provides a unique characterization of a path, subject to certain constraints: translation, parameterization, and irreducibility \cite{chenIntegrationPathsFaithful1958}.
+
+Translation invariance naturally arises from the signature's derivation. It stems from the manner in which iterated integrals are computed, where the differential \(dx_t = \frac{dx}{dt}dt\) effectively eliminates any dependence on the initial position of the path.
+
+Under parameterization that maintains the path's orientation, the signature remains invariant. For any orientation-preserving diffeomorphism \(\varphi\) defined over the interval \([s,t]\), the path's signature adheres to \(S(x \circ \varphi)_{s,t} = S(x)_{s,t}\). Consequently, the signature transcends mere parameterization nuances.
+
+Irreducibility denotes that a path cannot be expressed in a particular concatenated form involving path reversal. This notion is pivotal, as it underscores that the signature of the concatenated path \(x*y*\overleftarrow{y}*z\) mirrors that of the simpler path \(x*z\).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{The Logarithmic Signature}
+\label{sec:logarithmic-signature}
+
+In the realm of signature spaces, the emergence of a group structure naturally prompts inquiries into the existence of an associated Lie algebra and a corresponding logarithmic mapping. Chen first elucidated this aspect, confirming the presence of a Lie algebra structure within signature spaces and demonstrating that the logarithmic map yields a closed subspace within the tensor algebra \cite{chenIntegrationPathsGeometric1957}. Expanding upon Chen's concept, Lyons and Sidorova described this space as a 'formal Lie algebra', providing deeper insights into the structural dynamics within the group-like environment of signature spaces \cite{lyonsRadiusConvergenceLogarithmic2006}. Building upon this foundation, we now extend our exploration from the conventional signature to the logarithmic signature. In this section, we will examine its properties and make a case for its utility in practical applications.
+
+\subsection{The Logarithmic Signature of a Path}
+\label{subsec:log-signature-path}
+
+The logarithmic signature constitutes a powerful transformation of the path signature, offering profound insights into the geometric and analytic properties of paths. This section introduces and explores the intricacies of this transformation within the framework of formal power series.
+
+Beginning with the foundational principles outlined in \cite{chevyrevPrimerSignatureMethod2016}, we establish the logarithmic signature as a formal power series. Represented by \(x\), the series takes the form:
+
+\begin{equation}
+x = \sum_{k=0}^\infty \sum_{i_1,\ldots,i_k \in \{1,\ldots,d\}} \lambda_{i_1,\ldots,i_k} e_{i_1} \cdots e_{i_k},
+\end{equation}
+where \(\lambda_0 > 0\) ensures its convergence. The logarithm of \(x\) is then defined as:
+
+\begin{equation}
+\log x = \log(\lambda_0) + \sum_{n=1}^\infty \frac{(-1)^{n}}{n} \left( \frac{x}{\lambda_0} - 1 \right)^{\otimes n},
+\end{equation}
+with \(\otimes n\) denoting the n-th tensor power using the tensor product \(\otimes\).
+
+Exploring further, we illustrate the practical implications of this transformation through a concrete scenario. Consider a series \(x\) defined as:
+
+\begin{equation}
+x = 1 + \sum_{k=1}^\infty \frac{\lambda^k}{k!} e_1^{\otimes k}.
+\end{equation}
+
+A straightforward computation reveals that \(\log x = \lambda e_1\), showcasing how the logarithmic signature captures essential information from the original series while preserving finite coefficients.
+
+The logarithmic signature of a path \(X : [s, t] \to \mathbb{R}^d\) is formally represented as \(\mathcal{LS}(X)_{s,t} := \log S(X)_{s,t}\), as per Definition 6 in \cite{chevyrevPrimerSignatureMethod2016}. This representation facilitates a deeper understanding of the path's geometric structure and analytical properties.
+
+Moreover, Theorem 4 in the same work establishes that for any given path, the log signature can be expressed in terms of real coefficients \(\lambda_{i_1,\ldots,i_k}\), as:
+
+\begin{equation}
+\mathcal{LS}(X)_{s,t} = \sum_{k=1}^\infty \sum_{i_1,\ldots,i_k \in \{1,\ldots,d\}} \lambda_{i_1,\ldots,i_k} [e_{i_1}, [e_{i_2}, \ldots, [e_{i_{k-1}}, e_{i_k}] \ldots]].
+\end{equation}
+
+It's essential to note that these coefficients may not be unique due to the inherent lack of linear independence among certain polynomial constructs, as exemplified by the Lie bracket.
+
+Furthermore, the injective nature of the logarithmic signature, as established in \cite{hamblyUniquenessSignaturePath2010}, underscores its significance as a unique representation of a path. This uniqueness aligns with the properties of the path's signature, emphasizing its role as a fundamental analytical tool.
+
+Additionally, \cite{lyonsRoughPathsSignatures2014} accentuates the logarithmic signature space's flat geometry, simplifying distance computations by allowing the use of Euclidean norms. This geometric property enhances its practical utility in various analytical and computational contexts.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Redundancy in Standard Signature Analysis}
+\label{subsec:redundancy-signature}
+
+The issue of redundancy in standard signatures is notable. For \(n\)-fold integrals of the word \( w \), \(\langle S(x)_{s,t}, e_w \rangle\), with repetitions of letter \( i \), the signature only reflects the increment of the path \( x \)
+\begin{align}
+    \langle S(x)_{s,t}, e_i \rangle &= x_t - x_s, \nonumber \\
+    \langle S(x)_{s,t}, e_{ii} \rangle &= \frac{(x^i_t - x^i_s)^2}{2!},  \\
+    \langle S(x)_{s,t}, e_{iii} \rangle &= \frac{(x^i_t - x^i_s)^3}{3!}, \nonumber \\
+    &\vdots \nonumber
+\end{align}
+which are just different powers of the increment. 
+
+In the work of Ree \cite{reeLieElementsAlgebra1958}, the concept of the shuffle product is introduced to elucidate the inherent redundancy in the multiplication of signature terms. This concept is instrumental in demonstrating that the product of two such terms can be decomposed into a sum of more intricate signature terms. These terms are derived from the \((p,q)\)-shuffles of words \( i \) and \( j \), denoted as \( \text{Sh}(p,q) \). A \((p,q)\)-shuffle consists of permutations \( \sigma \) that preserve the order of the letters in both \( i \) and \( j \). Consequently, the product of the signatures of \( i \) and \( j \) can be expressed as an aggregate of all \((p,q)\)-shuffles of \( k \), represented mathematically as:
+
+\begin{equation}
+    \langle S(x)_{s,t}, e_{i_1,\ldots,i_p} \rangle \cdot \langle S(x)_{s,t}, e_{j_1,\ldots,j_q} \rangle = \sum_{\sigma \in \text{Sh}(p,q)} \langle S(x)_{s,t}, e_{k_{\sigma(1)},\ldots,k_{\sigma(p+q)}} \rangle.
+\end{equation}
+
+An exemplary case is the term for the word \( ij \), given by:
+
+\begin{equation}
+   \langle S(x)_{s,t}, e_{ij} \rangle = \langle S(x)_{s,t}, e_{ji} \rangle - \langle S(x)_{s,t}, e_i \rangle \cdot \langle S(x)_{s,t}, e_j \rangle,
+\end{equation}
+which does not offer additional geometric insight beyond the area encompassed by \( ji \) and the increments \( i \) and \( j \).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Efficiency of Logarithmic Signatures}
+Logarithmic signatures, in contrast to standard signatures, eliminate redundancy and succinctly encapsulate the geometric essence of a path's signature. For a two-dimensional path, a signature \( S(x) \) truncated at level \( L = 2 \) is represented as:
+
+\begin{equation}
+S(x) = (1, S^{(1)}(x), S^{(2)}(x), S^{(1,1)}(x), S^{(2,1)}(x), S^{(1,2)}(x), S^{(2,2)}(x)).
+\end{equation}
+
+The logarithmic signature \( \mathcal{LS}(x) \), truncated at the same level, is expressed as:
+
+\begin{equation}
+\mathcal{LS}(x) = \left(S^{(1)}(x), S^{(2)}(x), \tilde{S}^{(1,2)}(x)\right),
+\label{eq:logsig-truncated}
+\end{equation}
+where
+\begin{equation}
+\tilde{S}^{(1,2)}(x) = \frac{1}{2}\left(S^{(1,2)}(x) - S^{(2,1)}(x)\right).
+\end{equation}
+
+The logarithmic signature is the most compact description of the geometric properties of a path's signature, which can be deduced from the Rashevski-Chow Theorem \cite{lyonsRadiusConvergenceLogarithmic2006}.
+
+\input{sections/signature/signature-numerical.tex}

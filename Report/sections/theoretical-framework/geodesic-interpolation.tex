@@ -1,0 +1,11 @@
+\subsection{Geodesic Interpolation}
+\label{subsec:geodesic-interpolation}
+
+Geodesic interpolation within a Lie group \(G\) allows for smooth transitions between two elements \(c_0, c_1 \in G\). This process involves mapping the elements to the associated Lie algebra using the logarithmic map, performing linear interpolation within the Lie algebra, and then mapping the interpolated elements back to the Lie group via the exponential map \cite{shingelInterpolationSpecialOrthogonal2009, marthinsenInterpolationLieGroups1999}.
+
+For two elements \(c_0\) and \(c_1\) in \(G\), the geodesic interpolation path \(\zeta(t)\), where \(t \in [0, 1]\), is defined as:
+\begin{equation}
+    \zeta(t) = \exp(t \cdot \log(c_1 c_0^{-1})) c_0,
+    \label{eq:geodesic-interpolation}
+\end{equation}
+where \(\zeta(t)\) represents the shortest path between \(c_0\) and \(c_1\) in the Lie group. This approach ensures that the interpolation path is smooth and respects the intrinsic geometric structure of the Lie group.

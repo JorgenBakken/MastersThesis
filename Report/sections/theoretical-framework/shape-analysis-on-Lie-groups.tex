@@ -1,0 +1,110 @@
+\section{Shape Analysis on Lie Groups}
+\label{sec:shape-analysis-on-Lie-groups}
+
+Shape analysis is crucial for understanding the structure and diversity of geometric objects. Within Lie groups, it extends mathematical analysis to dynamic shapes. Shape spaces capture intrinsic geometry, focusing on essential features rather than specific parameterizations.
+
+\newpage
+\subsection{The Shape Space}
+\label{subsec:shape-space}
+
+Consider two curves \(c_1, c_2 \in \mathrm{Imm}(I, G)\), where \(\mathrm{Imm}(I, G)\) represents the space of immersions from the interval \(I = [0,1] \subset \mathbb{R}\) into a Lie group \(G\). The group of all orientation-preserving diffeomorphism of the interval \(I\), denoted \(\mathrm{Diff}^+(I)\), is defined as follows, detailed in \cite{celledoniSignaturesShapeAnalysis2019}:
+
+\begin{equation}
+    \mathrm{Diff}^+(I) := \{\varphi \in C^\infty(I, I) \mid \varphi'(t) > 0 \, \forall \, t \in I, \varphi(0) = 0, \varphi(1) = 1\}.
+    \label{eq:diffeomorphism-group}
+\end{equation}
+
+Following \cite{celledoniShapeAnalysisLie2016}, curves \(c_1\) and \(c_2\) are considered equivalent, belonging to the same shape space, if there exists an orientation-preserving diffeomorphism \(\varphi \in \mathrm{Diff}^+(I)\) such that \(c_1 = c_2 \circ \varphi\). This equivalence establishes an equivalence class under the action of \(\mathrm{Diff}^+(I)\), thus defining the shape space. Formally, the shape space is the quotient space:
+
+\begin{equation}
+    \mathcal{S} := \mathcal{P} / \mathrm{Diff}^+(I),
+    \label{eq:shape-space}
+\end{equation}
+where the space \(\mathcal{P}\) includes the immersions, encompassing all curves with non-vanishing first derivatives, and is defined by:
+
+\begin{equation}
+    \mathcal{P} := \mathrm{Imm}(I, G),
+    \label{eq:parameterized-space}
+\end{equation}
+
+This construction implies that the shape space \(\mathcal{S}\) captures all curves up to orientation-preserving reparameterizations, highlighting the geometric properties of shapes over their specific parameterizations.
+
+\subsection{Geodesic Distance in Shape Space}
+\label{subsec:geodesic-distance}
+
+Consider two curves, \(c_1\) and \(c_2\), which are elements of the space of immersions \(\mathrm{Imm}(I, G)\), where \(G\) is a finite-dimensional Lie group and \(I\) is the interval \([0,1]\). To measure distances between such immersions, we employ a metric \(d_{\mathcal{P}}\) defined on the space \(\mathcal{P}\) \eqref{eq:parameterized-space}. It is crucial for \(d_{\mathcal{P}}\) to reflect the intrinsic geometric properties of the curves, independent of their parameterization. This requirement is encapsulated by the property of reparameterization invariance:
+
+\begin{equation}
+    d_{\mathcal{P}}(c_1 \circ \varphi, c_2 \circ \varphi) = d_{\mathcal{P}}(c_1, c_2), \quad \forall \, \varphi \in \mathrm{Diff}^+(I).
+    \label{eq:reparameterization-invariance}
+\end{equation}
+
+The shape space metric \(d_{\mathcal{S}}\) is then defined by minimizing over all reparameterizations:
+
+\begin{equation}
+    d_{\mathcal{S}}(c_1, c_2) := \inf_{\varphi \in \mathrm{Diff}^+(I)} d_{\mathcal{P}}(c_1, c_2 \circ \varphi).
+    \label{eq:shape-space-metric}
+\end{equation}
+
+This definition effectively removes the influence of parameterization, focusing purely on the geometric shape of the curves.
+
+By asserting that the metric \(d_{\mathcal{P}}\) is reparameterization invariant for any two curves and for any orientation-preserving diffeomorphism \(\varphi \in \mathrm{Diff}^+(I)\), the metric \(d_{\mathcal{S}}\) also inherits this invariance \cite[Lemma 3.4]{celledoniShapeAnalysisLie2016}.
+
+Utilization of the Euclidean norm might lead to vanishing distances for non-identical curves, as highlighted by Michor and Mumford \cite{michorVanishingGeodesicDistance2004}. To address this limitation, a more robust choice involves Sobolev-type metrics based on the arc length derivative \cite{michorOverviewRiemannianMetrics2007a}, which incorporate derivatives of curves to capture more subtle geometric differences.
+
+\subsection{Square Root Velocity Transform (SRVT)}
+\label{subsec:square-root-velocity-transform}
+
+Introduced by Srivastava et al. \cite{srivastavaShapeAnalysisElastic2011}, the Square Root Velocity Transform (SRVT) is a pivotal tool in shape analysis \cite{bauerConstructingReparametrizationInvariant2014, bauerOverviewGeometriesShape2014, bauerLandmarkGuidedElasticShape2015, celledoniShapeAnalysisHomogeneous2018, celledoniShapeAnalysisLie2016, celledoniSignaturesShapeAnalysis2019, schmedingIntroductionInfinitedimensionalDifferential2022, tumpachTemporalAlignmentHuman2023}. The SRVT transforms curves into a space where standard linear operations are meaningful, simplifying the complex problems of shape analysis and comparison.
+
+The transformation for curves within a Lie group is defined as follows \cite{celledoniShapeAnalysisLie2016}:
+
+\begin{equation}
+    \begin{aligned}
+        \mathcal{R}: \mathrm{Imm}(I, G) \rightarrow \left\{q \in C^\infty(I, \mathfrak{g}) \mid q(t) \neq 0  \, \forall \, t \in I\right\}, \\
+        q(t) = \mathcal{R}(c)(t) := \frac{R^{-1}_{c(t)_*}(\dot c(t))}{\sqrt{\|R^{-1}_{c(t)_*}(\dot c(t))\|}},
+    \end{aligned}
+    \label{eq:SRVT}
+\end{equation}
+where \(\dot{c}(t)\) denotes the tangent vector of the curve at point \(c(t)\), and \(R^{-1}_{c(t)_*}\) is the differential of the inverse right translation by \(c(t)\). This operation transforms the tangent vector into the Lie algebra \(\mathfrak{g}\), and the division by the square root of its norm ensures the result is a unit vector, thereby reparameterizing the curve by its arc length.
+
+As noted in \cite{celledoniShapeAnalysisLie2016}, SRVT is equivariant with respect to reparameterization, satisfying \(\mathcal{R}(c \circ \varphi) = \mathcal{R}(c) \circ \varphi \cdot \sqrt{\dot{\varphi}}\). Additionally, SRVT is translation invariant, meaning \(\mathcal{R}(R_g \cdot c ) = \mathcal{R}(c)\). This implies that the transformed representation of a curve remains unchanged under translation by an element \(g\) in the Lie group.
+
+The translation invariance property implies that SRVT does not retain information about the initial position of the curve, leading to its non-injectivity. This characteristic highlights a fundamental aspect of SRVT: while it effectively captures the geometric essence of a curve, it abstracts away certain specific details like the starting point and orientation in space. 
+
+\subsection{Pseudometric Based on SRVT}
+\label{subsec:pseudometric-based-on-SRVT}
+
+The pseudometric \(d_{\mathcal{P}}\) on the space of immersions \(\mathcal{P}\) is defined following the framework in \cite[Definition 3.7]{celledoniShapeAnalysisLie2016}:
+\begin{equation}
+    d_{\mathcal{P}}(c_0, c_1) := \sqrt{\int_I \|q_0(t) - q_1(t)\|^2 \, dt} = d_{L^2}(\mathcal{R}(c_0), \mathcal{R}(c_1)),
+\end{equation}
+where \(q_i := \mathcal{R}(c_i)\) for \(i = 0, 1\). This pseudometric, \(d_{\mathcal{P}}\), is invariant under reparameterization, as shown in \cite[Proposition 3.8]{celledoniShapeAnalysisLie2016}.
+
+The subspace \(\mathcal{P}_*\) is defined as a closed submanifold of \(\mathcal{P}\):
+\begin{equation}
+    \mathcal{P}_* := \{c \in \mathrm{Imm}(I, G) : c(0) = e\},
+\end{equation}
+where \(e\) denotes the identity element of the Lie group \(G\). This subset represents immersions that start at the identity, formally expressed as \(\mathcal{P} \cap C^\infty(I, G)\). To adjust any smooth curve \(c: I \rightarrow G\) to start at the identity, the curve is right-translated by applying the inverse of its initial point \(c(0)^{-1}\) to every point along the curve:
+\begin{equation}
+    c(t) \mapsto c(t) \cdot c(0)^{-1} \quad \forall \, t \in [0,1].
+\end{equation}
+
+The pseudometric \(d_{\mathcal{P}_*}\) on \(\mathcal{P}_*\) utilizes SRVT to induce a metric from the \(L^2\)-metric on the tangent space \(C^\infty(I, \mathfrak{g} \setminus \{0\})\):
+\begin{equation}
+    d_{\mathcal{P}_*}(c_0, c_1) := 
+    d_{L^2}(\mathcal{R}(c_0 \cdot c_0(0)^{-1}), \mathcal{R}(c_1 \cdot c_1(0)^{-1})),
+\end{equation}
+where \(q_i = \mathcal{R}(c_i)\) for \(i = 0, 1\).
+
+According to \cite[Definition 3.10]{celledoniShapeAnalysisLie2016}, we can define the shape space \(\mathcal{S}_*\) as
+\begin{equation}
+    \mathcal{S}_* := \mathcal{P}_* / \mathrm{Diff}^+(I).
+\end{equation}
+
+Finally, the pseudometric \(d_{\mathcal{S}_*}\) on \(\mathcal{S}_*\) is given by
+\begin{equation}
+    d_{\mathcal{S}_*}(c_0, c_1) = \inf_{\varphi \in \mathrm{Diff}^+(I)} d_{\mathcal{P}_*}(\mathcal{R}(c_0), \mathcal{R}(c_1 \circ \varphi)),
+    \label{eq:shape-space-metric-id}
+\end{equation}
+providing a geodesic distance on \(\mathcal{S}_*\), as established in \cite{bruverisGEODESICCOMPLETENESSSOBOLEV2014}.

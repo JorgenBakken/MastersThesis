@@ -1,0 +1,34 @@
+\begin{algorithm}
+    \caption{Calculate Cost and Parent Matrices for Dynamic Programming}
+    \begin{algorithmic}[1]
+    \Require $I \in \mathbb{R}^n$: Grid points
+    \Require $q_0, q_1 \in \mathbb{R}^{n-1}$: Values defined on the domain of $I$
+    \Require $\text{depth} \in \mathbb{N}^+$: Depth of the search area
+    \Function{calculateCostMatrixAndParent}{$I, q_0, q_1, \text{depth}$}
+        \State $n \gets \text{length}(I)$
+        \State $A \gets \text{matrix\_of\_infinity}(n, n)$ \Comment{Initialize cost matrix to a large value}
+        \State $P \gets \text{empty matrix}(n, n)$ \Comment{Initialize parent matrix}
+        
+        \State $A[0, 0] \gets 0$ \Comment{Set initial cost to zero}
+        \State $P[0, 0] \gets \text{None}$ \Comment{No predecessor for initial condition}
+        
+        \For{$i \gets 0$ \textbf{to} $n-1$}
+            \For{$j \gets 0$ \textbf{to} $n-1$}
+                \State $\text{preds} \gets \text{findPreds}(i, j, \text{depth})$ \Comment{\eqref{eq:search-area}}
+                \For{$\text{pred} \in \text{preds}$}
+                    \State $\text{cost\_to\_pred} \gets \text{localCost}(i, j, \text{pred}, q_0, q_1)$ 
+                    \Comment{\eqref{eq:local-cost-functional}, \eqref{eq:local-cost-functional-SE3}}
+                    \State $\text{cost} \gets \text{cost\_to\_pred} + A[\text{pred}]$ \Comment{\eqref{eq:cost-matrix}}
+                    \If{$\text{cost} < A[i, j]$}
+                        \State $A[i, j] \gets \text{cost}$
+                        \State $P[i, j] \gets \text{pred}$
+                    \EndIf
+                \EndFor
+            \EndFor
+        \EndFor
+    
+        \State \Return $P, A$
+    \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+    

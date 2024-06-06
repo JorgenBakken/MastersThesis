@@ -1,0 +1,31 @@
+\subsection{Analysis of optimal reparameterization}
+
+Consider the unit interval \(I\) defined as:
+\[
+I = [0, 1]
+\]
+
+Let \(\varphi\) and \(\varphi_{\epsilon}\) denote piecewise continuous linear reparameterization functions mapping \(I\) onto itself, and let both belong to the space of orientation-preserving diffeomorphisms, \(\text{Diff}^+(I)\). The perturbed reparameterization \(\varphi_{\epsilon}\) is given by:
+\[
+\varphi_{\epsilon}(t) = t + \epsilon(t)
+\]
+with the constraint on its derivative to maintain orientation:
+\[
+\varphi_{\epsilon}'(t) = 1 + \epsilon'(t) > 0, \quad \text{hence} \quad \epsilon'(t) > -1
+\]
+
+\[
+\mathcal{R}(c)(t) = \frac{c'(t)}{\sqrt{|c'(t)|}}
+\]
+
+\[
+\min_{\varphi} \int_0^1 \left\| \mathcal{R}(c)(t) - \mathcal{R}(c \circ \varphi_{\epsilon} \circ \varphi)(t) \right\|^2 \, dt
+\]
+
+\[
+\varphi_{\epsilon}(t) = \sum_{i = 0}^n y_{\epsilon, i} \varphi_{\epsilon, i}(t), \quad \varphi(t) = \sum_{i = 0}^n y_i \varphi_i(t)
+\]
+
+\[
+c(t) = \sum_{i = 0}^n x_i c_i(t)
+\]

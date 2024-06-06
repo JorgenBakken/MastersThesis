@@ -1,0 +1,181 @@
+\chapter{Additional Material}
+
+\section{Inequality for Concave Functions}
+\label{app:concave_inequality}
+
+Consider a function \( f: \mathbb{R} \rightarrow \mathbb{R} \) that is concave, with the property that \( f(0) \geq 0 \). For any \( a, b \in \mathbb{R}^+ \), we aim to demonstrate the following inequality:
+
+\begin{equation*}
+f(a) + f(b) \geq f(a + b).
+\end{equation*}
+
+The definition of concavity for any function \( f \) stipulates that:
+
+\begin{equation*}
+f(\lambda x_1 + (1 - \lambda)x_2) \geq \lambda f(x_1) + (1 - \lambda)f(x_2),
+\end{equation*}
+for any \( x_1, x_2 \in \mathbb{R} \) and \( \lambda \in [0, 1] \). Applying this definition, we set \( x_1 = 0 \) and \( x_2 = a + b \), and examine two specific cases of \( \lambda \):
+
+Let \( \lambda = \frac{a}{a + b} \). Then,
+
+\begin{equation*}
+\begin{aligned}
+    f\left( \frac{a}{a+b} \cdot 0 + \frac{b}{a+b} \cdot (a+b) \right) 
+    &\geq \frac{a}{a + b}f(0) + \frac{b}{a+b}f(a+b) \\
+    f(b) &\geq \frac{b}{a+b}f(a+b),
+\end{aligned}
+\end{equation*}
+where \( \frac{a}{a + b}f(0) \geq 0 \) due to the given condition that \( f(0) \geq 0 \).
+
+Let \( \lambda = \frac{b}{a + b} \). Then,
+
+\begin{equation*}
+\begin{aligned}
+    f\left( \frac{b}{a+b} \cdot 0 + \frac{a}{a+b} \cdot (a+b) \right) 
+    &\geq \frac{b}{a + b}f(0) + \frac{a}{a+b}f(a+b) \\
+    f(a) &\geq \frac{a}{a+b}f(a+b),
+\end{aligned}
+\end{equation*}
+with \( \frac{b}{a + b}f(0) \geq 0 \) by the same premise.
+
+Summing these inequalities yields:
+
+\begin{equation}
+f(a) + f(b) \geq \left( \frac{a}{a+b} + \frac{b}{a+b} \right)f(a+b) = f(a+b),
+\label{eq:concave_inequality}
+\end{equation}
+thus confirming the asserted inequality.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{\texorpdfstring{\( q \)-Hölder Continuity of Power Norm Functions}{q-Hölder Continuity of Power Norm Functions}}
+\label{app:q_holder_proof}
+
+Consider the function \( f : \mathbb{R}^n \rightarrow \mathbb{R} \) defined by \( f(x) = \| x \|^q \) for a given \( q \in (0,1) \). We aim to demonstrate that \( f \) is \( q \)-Hölder continuous, i.e., there exists a constant \( C \in \mathbb{R}^+ \) such that for any \( x, y \in \mathbb{R}^n \), the following inequality holds:
+
+\begin{equation}
+\left| f(x) - f(y) \right| \leq C \| x - y \|^q.
+\end{equation}
+
+Using the results from \ref{app:concave_inequality}, we know that if \( f \) is concave and \( f(0) \geq 0 \), then for any \( a, b \in \mathbb{R}^+ \):
+
+\begin{equation*}
+f(a) + f(b) \geq f(a + b).
+\end{equation*}
+
+In this case, since \( f(z) = z^q \) is concave for \( z \geq 0 \), we apply the definition of concavity directly. Assume without loss of generality that \( \| x \| \geq \| y \| \). Then,
+
+\begin{equation*}
+\left| \| x \|^q - \| y \|^q \right| = \| x \|^q - \| y \|^q.
+\end{equation*}
+
+By the concavity of \( f(z) = z^q \), we have:
+
+\begin{equation*}
+\left( \| y \| + \| x - y \| \right)^q \leq \| y \|^q + \| x - y \|^q.
+\end{equation*}
+
+Thus,
+
+\begin{equation*}
+\| x \|^q = \left( \| y + (x - y) \| \right)^q \leq \left( \| y \| + \| x - y \| \right)^q \leq \| y \|^q + \| x - y \|^q.
+\end{equation*}
+
+Therefore,
+
+\begin{equation*}
+\| x \|^q - \| y \|^q \leq \| x - y \|^q.
+\end{equation*}
+
+By symmetry, if \( \| y \| \geq \| x \| \), the same argument applies. Hence, we conclude:
+
+\begin{equation*}
+\left| f(x) - f(y) \right| = \left| \|x\|^q - \|y\|^q \right| \leq \|x - y\|^q,
+\end{equation*}
+
+confirming the \( q \)-Hölder continuity of \( f \) with constant \( C = 1 \).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{\texorpdfstring{$\alpha$}{alpha}-Hölder Continuity}
+\label{app:alpha_holder_proof}
+
+Consider the function \( V : \mathbb{R}^n \rightarrow \mathbb{R}^n \) defined by \( V(x) = x \|x\|^{\alpha - 1} \) for \( 0 < \alpha \leq 1 \). We aim to demonstrate that \( V \) is \( \alpha \)-Hölder continuous, i.e., there exists a constant \( C \in \mathbb{R}^+ \) such that for any \( x, y \in \mathbb{R}^n \):
+
+\begin{equation*}
+    \left\| x\|x\|^{\alpha-1} - y\|y\|^{\alpha-1} \right\| \leq C \|x - y\|^{\alpha}.
+\end{equation*}
+
+Using the results from \ref{app:q_holder_proof}, we know that if \( f(x) = \|x\|^q \) is \( q \)-Hölder continuous, then
+
+\begin{equation*}
+\left| \|x\|^q - \|y\|^q \right| \leq \|x - y\|^q,
+\end{equation*}
+for any \( x, y \in \mathbb{R}^n \) and \( q \in (0, 1) \). Applying this result, we proceed as follows:
+
+\begin{equation*}
+    \begin{aligned}
+        \left\| x \|x\|^{\alpha - 1} - y \|y\|^{\alpha - 1} \right\| 
+        &= \left\| x \|x\|^{\alpha - 1} - \underbrace{\|x\|\frac{y}{\|y\|} + \|x\|\frac{y}{\|y\|}}_{=0} - y \|y\|^{\alpha - 1} \right\| \\
+        &\leq \left\| x \|x\|^{\alpha - 1} - \|x\|^\alpha \frac{y}{\|y\|} \right\| + \left\| \|x\|^\alpha \frac{y}{\|y\|} - y \|y\|^{\alpha - 1} \right\| \\
+        &= \left\|\|x\| \frac{\|x\|^\alpha}{\|x\|} - \|x\|^\alpha \frac{y}{\|y\|} \right\| + \left\|\|x\|^\alpha \frac{y}{\|y\|} - \|y\|^\alpha \frac{y}{\|y\|} \right\| \\
+        &= \|x\|^{\alpha - 1} \left\| x - \underbrace{y + y}_{=0} - \|x\| \frac{y}{\|y\|} \right\| + \left| \|x\|^\alpha - \|y\|^\alpha \right| \left\| \frac{y}{\|y\|} \right\| \\
+        &= \|x\|^{\alpha - 1} \underbrace{\left\| x - y + y \frac{\|y\| - \|x\|}{\|y\|} \right\|}_{i} + \left| \|x\|^\alpha - \|y\|^\alpha \right|.
+    \end{aligned}
+\end{equation*}
+
+We can bound \((i)\) as follows:
+\begin{equation*}
+    \begin{aligned}
+        \left\| x - y + y \frac{\|y\| - \|x\|}{\|y\|} \right\| 
+        &\leq \left\| x - y \right\| + \left\| y \frac{\|y\| - \|x\|}{\|y\|} \right\| \\
+        &= \left\| x - y \right\| + \left| \|y\| - \|x\| \right| \\ 
+        &\leq 2\left\| x - y \right\|.
+    \end{aligned}
+\end{equation*}
+
+Substituting this bound back into the inequality, we have:
+
+\begin{equation*}
+        \|x\|^{\alpha - 1} \left\| x - y + y \frac{\|y\| - \|x\|}{\|y\|} \right\| + \left| \|x\|^\alpha - \|y\|^\alpha \right| 
+        \leq 2 \|x\|^{\alpha - 1} \|x - y\| + \left| \|x - y\|^\alpha \right| 
+\end{equation*}
+
+Assuming without loss of generality that \(\|x\| \geq \|y\| > 0\), we consider two cases:
+
+If \(\|x-y\| \leq \|x\|\), then:
+\begin{equation*}
+    \|x\|^{\alpha - 1}  \leq \|x-y\|^{\alpha - 1},
+\end{equation*}
+such that 
+\begin{equation*}
+    \begin{aligned}
+        2 \|x\|^{\alpha - 1} \|x - y\| + \|x - y\|^\alpha 
+        &\leq 2 \|x-y\|^{\alpha - 1} \|x - y\| + \|x - y\|^\alpha  \\
+        &= 2 \|x-y\|^{\alpha} + \|x - y\|^\alpha \\
+        &= 3 \|x-y\|^{\alpha}.
+    \end{aligned}
+\end{equation*}
+
+If \(\|x-y\| > \|x\|\), then:
+\begin{equation*}
+    \|x-y\| \leq \|x\| + \|y\| \leq 2\|x\|,
+\end{equation*}
+such that:
+\begin{equation*}
+    \begin{aligned}
+        2 \|x\|^{\alpha - 1} \|x - y\| + \|x - y\|^\alpha 
+        &\leq 2 \|x\|^{\alpha - 1} 2\|x\| + \|x - y\|^\alpha \\
+        &\leq 4 \|x - y\|^{\alpha} + \|x - y\|^\alpha \\
+        &= 5 \|x - y\|^{\alpha}.
+    \end{aligned}
+\end{equation*}
+
+Thus, we have shown that:
+\begin{equation*}
+    \left\| x \|x\|^{\alpha - 1} - y \|y\|^{\alpha - 1} \right\| \leq 5 \|x - y\|^{\alpha},
+\end{equation*}
+
+which means that \( V \) is \( \alpha \)-Hölder continuous with \( C = 5 \).

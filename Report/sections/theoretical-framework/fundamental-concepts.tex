@@ -1,0 +1,14 @@
+\section{Fundamental Concepts}
+\label{sec:fundamental-concepts}
+
+We refer to \cite{leeIntroductionSmoothManifolds2012} for the conventions and notations used in this thesis. A Lie group \(G\) is a differentiable manifold with a smooth group structure, ensuring smooth multiplication and inversion operations. The corresponding Lie algebra, \(\mathfrak{g}\), is the tangent space at the identity element of \(G\) and features a Lie bracket \([\cdot, \cdot] : \mathfrak{g} \times \mathfrak{g} \rightarrow \mathfrak{g}\), which is bilinear, antisymmetric, and satisfies the Jacobi identity.
+
+For a Lie group \(G\) and elements \(g, h \in G\), left and right translations are denoted as \(L_g(h) = gh\) and \(R_g(h) = hg\). The differential of the right translation by \(h\), \(T_gR_h\), maps from the tangent space at \(g\), \(T_gG\), to the tangent space at \(gh\), \(T_{gh}G\).
+
+A Lie algebra-valued one-form on a Lie group \(G\) assigns, at each point \(g \in G\), a linear functional from the tangent space at \(g\), \(T_gG\), to the Lie algebra \(\mathfrak{g}\). Specifically, for any tangent vector \(X_g \in T_gG\), there exists a one-form \(\omega_g\) in the cotangent space \(T^*_gG\) that maps \(X_g\) to an element of \(\mathfrak{g}\).
+
+The Cartesian product \(G \times G\) consists of all pairs \((g_1, g_2)\) with \(g_1, g_2 \in G\), operating under component-wise group actions. The corresponding Lie algebra is \(\mathfrak{g} \oplus \mathfrak{g}\), with the Lie bracket on \(G \times G\) defined as:
+\begin{equation}
+    [(g_1, g_2), (h_1, h_2)] = ([g_1, h_1], [g_2, h_2]),
+\end{equation}
+where \([g_1, h_1]\) and \([g_2, h_2]\) are the Lie brackets within \(\mathfrak{g}\).

@@ -1,0 +1,137 @@
+
+\subsection{Old Perturbation Analysis}
+
+Considering the optimization problem defined by the energy functional $E_{\mathrm{optimal}}$, we aim to minimize the discrepancy between two parameterized curves under a specific reparameterization, incorporating a regularization term to penalize deviations from the identity mapping. The formal representation of this optimization problem is given by:
+\begin{equation}
+    \begin{aligned}
+        E_{\mathrm{optimal}} 
+        &:= \min_{\varphi} E(\varphi) \\
+        &= \min_{\varphi} \int_0^1 \left\| q_0(t) - (q_1 \circ \varphi)(t) \sqrt{\dot{\varphi}(t)} \right\|_2^2 \, dt + \lambda \int_0^1 \left\|\varphi(t) - \varphi_{id}(t) \right\|_2^2 \, dt,
+    \end{aligned}
+\end{equation}
+where $\varphi_{id} = I_{id}$ denotes the identity mapping, serving as a valid solution and an upper bound for the energy functional in the absence of reparameterization:
+\begin{equation}
+    E_{\mathrm{opt}} \leq E(\varphi_{id}) = \int_0^1 \left\| q_0(t) - q_1(t) \right\|_2^2 \, dt.
+\end{equation}
+
+For a curve parameterized by $c(t) = f(t)$, where $f$ is an infinitely differentiable function, the Square Root Velocity Function (SRVF) is defined as:
+\begin{equation*}
+    q(t) = \frac{{c'(t)}}{\sqrt{|{c'(t)}|}}.
+\end{equation*}
+
+\subsection{Parameterization Perturbation}
+
+Introducing a perturbation analysis with curves $c_0 = f(t)$ and $c_1 = f(t + \epsilon)$, for $t \in I = [0, 1]$ and $\epsilon$ being sufficiently small, we examine the impact of this perturbation on the optimization problem:
+\begin{equation}
+    \begin{aligned}
+        E_{\mathrm{opt}} 
+        &= \min_{\varphi} \int_I \left\| \frac{f'(t)}{\sqrt{|f'(t)|}} - \frac{(f \circ \varphi)'(t + \epsilon)}{\sqrt{|(f \circ \varphi)'(t + \epsilon)|}} \right\|_2^2 \, dt \\
+        &\leq \int_I \left\| \frac{f'(t)}{\sqrt{|f'(t)|}} - \frac{f'(t + \epsilon)}{\sqrt{|f'(t + \epsilon)|}} \right\|_2^2 \, dt \\
+        &= \int_I \left\| g(t) - g(t + \epsilon) \right\|_2^2 \, dt,
+    \end{aligned}
+\end{equation}
+where $g(t) = \frac{f'(t)}{\sqrt{|f'(t)|}}$ represents the SRVF of the curve.
+
+Employing a Taylor expansion, we approximate the function $g(t + \epsilon)$ as follows:
+\begin{equation*}
+    g(t + \epsilon) = g(t) + \epsilon g'(t) + \frac{\epsilon^2}{2}g''(t) + \cdots
+\end{equation*}
+
+Thus, the perturbation effect on the energy functional can be quantified as:
+\begin{equation}
+    \begin{aligned}
+        E_{\mathrm{opt}} 
+        &\leq \int_I \left\| \epsilon g'(t) + \frac{\epsilon^2}{2}g''(t) \right\|_2^2 \, dt \\
+        &= |\epsilon|^2 \int_0^1 \left\| g'(t) \right\|_2^2 \, dt + \mathcal{O}(\epsilon^4),
+    \end{aligned}   
+\end{equation}
+indicating that the convergence rate of the energy functional, with respect to the perturbation of the curve, is of the order $\mathcal{O}(\epsilon^2)$.
+
+\subsection{Curve Perturbation}
+
+Considering the perturbation of the curve $c_1 = f(t) + \epsilon$, for $t \in I = [0, 1]$ and $\epsilon$ being sufficiently small, we examine the impact of this perturbation on the optimization problem:
+
+\begin{equation}
+    \begin{aligned}
+        E_{\mathrm{opt}} 
+        &= \min_{\varphi} \int_I \left\| \frac{f'(t)}{\sqrt{|f'(t)|}} - \frac{(f \circ \varphi)'(t) + \epsilon \circ \varphi(t)}{\sqrt{|(f \circ \varphi)'(t) + \epsilon \circ \varphi(t)|}} \right\|_2^2 \, dt \\
+        &\leq \int_I \left\| \frac{f'(t)}{\sqrt{|f'(t)|}} - \frac{f'(t)}{\sqrt{|f'(t)|}} \right\|_2^2 \, dt \\
+        &= \int_I \left\| g(t) - g(t + \epsilon) \right\|_2^2 \, dt, \\ 
+        &= |\epsilon|^2 \int_0^1 \left\| g'(t) \right\|_2^2 \, dt + \mathcal{O}(\epsilon^4),
+    \end{aligned}
+\end{equation}
+
+indicating that the convergence rate of the energy functional, with respect to the perturbation of the curve, is of the order $\mathcal{O}(\epsilon^2)$.
+
+
+\subsection{Error Analysis as Number of Points Increases}
+
+Considering the perturbation of the number of points in the discretization of the curve, we examine the impact of this perturbation on the optimization problem. We define the discretization of the curve as $c(t) = f(I)$, where $I = \{t_1, t_2, \ldots, t_n\}$, and the perturbed discretization as $c(t) = f(I + \epsilon)$, where $I + \epsilon = \{t_1 + \epsilon, t_2 + \epsilon, \ldots, t_n + \epsilon\}$, for $\epsilon$ being sufficiently small. We define the step size \(h := t_{i+1} - t_i\). We will here look into the impact of the error as the number of points increases, i.e., as \(n \rightarrow \infty\), \(h \rightarrow 0\). 
+
+\begin{equation}
+    \begin{aligned}
+        E_{\mathrm{opt}} 
+        &= \min_{\varphi} \sum_{i=1}^{n-1} \left\| \frac{f(t_{i+1}) - f(t_i)}{\sqrt{|f(t_{i+1}) - f(t_i)|}} - \frac{(f \circ \varphi)(t_{i+1}) - (f \circ \varphi)(t_i)}{\sqrt{|(f \circ \varphi)(t_{i+1}) - (f \circ \varphi)(t_i)|}} \right\|_2^2 h \\ 
+    \end{aligned}
+\end{equation}
+
+
+
+
+
+
+
+%%%%%%%%%%%%% Perturbation %%%%%%%%%%%%%%
+
+
+%%%%% Not a part of the text %%%%%
+
+
+
+
+
+
+
+\begin{equation*}
+    E = \int_k^j | \frac{c_0'}{|\sqrt{c_0'}|} - \sqrt{\varphi'} \frac{c_1' \circ \varphi}{\sqrt{|c_1' |} \circ \varphi} |^2 dt
+\end{equation*}
+
+We examine the analytical convergence of the energy functional under various scenarios:
+
+\textbf{Case 1 (Decreasing Perturbation):}
+\begin{align*}
+    c_0 &= f(I), \\
+    c_1 &= f(I + \epsilon), \\
+    E_{\varphi} &\rightarrow 0 \quad \text{as} \quad \epsilon \rightarrow 0.
+\end{align*}
+
+\textbf{Case 2 (Decreasing Perturbation):}
+\begin{align*}
+    c_0 &= f(I), \\
+    c_1 &= f(I) + \epsilon, \\
+    E_{\varphi} &\rightarrow 0 \quad \text{as} \quad \epsilon \rightarrow 0.
+\end{align*}
+
+\textbf{Case 3 (Increasing Number of Points):}
+\begin{align*}
+    c_0 &= f(I), \\
+    c_1 &= f(I + \epsilon), \\
+    E_{\varphi} &\rightarrow 0 \quad \text{as} \quad n \rightarrow \infty.
+\end{align*}
+
+\textbf{Case 4 (Increasing Number of Points):}
+\begin{align*}
+    c_0 &= f(I), \\
+    c_1 &= f(I) + \epsilon, \\
+    E_{\varphi} &\rightarrow 0 \quad \text{as} \quad n \rightarrow \infty.
+\end{align*}
+
+\textbf{Case 5 (Increasing Number of Points):}
+\begin{align*}
+    \text{Define} \quad g(I), \quad &g(0) = 0, \quad g(1) = 1, \quad g'(I) > 0, \\
+    c_0 &= f(I), \\
+    c_1 &= f(g(I)), \\
+    E_{\varphi} &\rightarrow 0 \quad \text{as} \quad n \rightarrow \infty.
+\end{align*}
+
+

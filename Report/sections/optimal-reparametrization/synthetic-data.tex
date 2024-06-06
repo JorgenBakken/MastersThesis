@@ -1,0 +1,211 @@
+\subsection{Synthetic Data Generation}
+\label{subsec:synthetic-data-generation}
+
+In this subsection, we outline the process of generating synthetic data for numerical analysis. This synthetic data is critical for evaluating our reparameterization framework. We generate data by solving differential equations with different parameterizations. The synthetic data includes trajectories, parameterizations, and curves for different groups such as \(\mathrm{SO}(3)\), \(\mathrm{SE}(3)\), \(\mathrm{SO}(3)^3\), and \(\mathrm{SE}(3)^3\). These elements are used later in our numerical analysis.
+
+\subsubsection{Generating Synthetic Trajectories}
+\label{subsubsec:synthetic-trajectories-generation}
+
+To generate synthetic trajectories, we model the system using the differential equation:
+\begin{equation}
+    \frac{d}{dt} g(t) = g(t) \hat{u}(t), \quad t \in [0, 1],
+    \label{eq:diff-eq-synthetic}
+\end{equation}
+where \( g(t) \in \mathrm{SO}(3) \) or \( \mathrm{SE}(3) \), and \(\hat{u}(t)\) is the hat map of \(u(t)\). We assume an initial value \( g(0) = e \) (the identity element). By varying \(\hat{u}(t)\) with different parameterizations, we synthesize diverse datasets. The trajectories are approximated using the fourth-order Runge-Kutta (RK4) method \cite{rungeUeberNumerischeAufloesung1895,butcherCoefficientsStudyRungeKutta1963} over discrete time intervals.
+
+For \(\mathrm{SO}(3)\), we set \(u(t) = \omega_i(t) \in \mathbb{R}^3\). For \(\mathrm{SE}(3)\), we set \(u(t) = \xi_i(t) = [\omega_i(t), v_i(t)]^T \in \mathbb{R}^6\), which is mapped to the corresponding Lie algebra via \eqref{eq:hat_SO3} and \eqref{eq:hat_SE3}.
+
+To demonstrate the generation of synthetic data for Cartesian curves, \(n = 3\) is chosen. For either \(\mathrm{SO}(3)^3\) or \(\mathrm{SE}(3)^3\), we define three different functions \(u(t)\). Thus, solving \eqref{eq:diff-eq-synthetic} generates three synthetic trajectories over discrete time intervals.
+
+We define nine \(\omega_i(t)\) and nine \(v_i(t)\) to generate the rotational and translational components, respectively, used for \(u(t)\). The rotational functions are defined in \eqref{eq:synthetic-data-rotation}, and the translational functions are defined in \eqref{eq:synthetic-data-translation}.
+
+\begin{equation}
+    \begin{aligned}
+        \omega_1(t) &= 
+            [2 \sin(3t) \exp(t), 4 \cos(3t), 3t \sin(t) \cos(t)]^T \\
+        \omega_2(t) &= 
+            [3t, 4 \sin(10t), 3t \sin(t) \cos(t)]^T \\
+        \omega_3(t) &= 
+            [4t^2, 5 \sin(4t) \sin(6t), 3t \cos(t)]^T \\
+        \omega_4(t) &= 
+            [3 \sin(2t) \exp(-t), 5 \cos(2t), 4t \sin(t) \cos(t)]^T \\
+        \omega_5(t) &= 
+            [t^3, 5 \sin(5t), 2t \sin(t) \sin(t)]^T \\
+        \omega_6(t) &= 
+            [2t^2, 3 \sin(6t) \cos(t), 5t \cos(t) \cos(t)]^T \\
+        \omega_7(t) &= 
+            [-1, 6 \sin(3t), 3t \sin(t)]^T \\
+        \omega_8(t) &= 
+            [t^2, 4 \cos(3t), t \sin(t)]^T \\
+        \omega_9(t) &= 
+            [3t, 5 \sin(2t), 2t \cos(t)]^T
+    \end{aligned}
+    \label{eq:synthetic-data-rotation}
+\end{equation}
+
+\begin{equation}
+    \begin{aligned}
+        v_1(t) &= 
+        [3t \sin(t) \cos(t), t, \cos(t), \sin(3t)]^T \\
+        v_2(t) &=
+        [\sin(2t), \cos(3t), \exp(t)]^T \\
+        v_3(t) &=
+        [\cos(t) \cos(3t), \sin(4t), \cos(2t)]^T \\
+        v_4(t) &=
+        [t^2, \sin(t^2), \exp(-t)]^T \\
+        v_5(t) &=
+        [\cos(2t), \log(t + 1), t]^T \\
+        v_6(t) &=
+        [\sin(t) \cos(t), t^3, \sin(t^3)]^T \\
+        v_7(t) &=
+        [\cos(5t), \exp(t/2), t \sin(t)]^T \\
+        v_8(t) &=
+        [\sin(2t), t \exp(-t), \cos(t^2)]^T \\
+        v_9(t) &=
+        [t^2 \cos(t), \sin(t^2), -0.5]^T
+    \end{aligned}
+    \label{eq:synthetic-data-translation}
+\end{equation}
+
+By solving \eqref{eq:diff-eq-synthetic} with \(u(t) = \omega_i(t)\), for \(i = 1, 2, \dots, 9\) over equidistant points on \([0,1]\), we obtain the rotational trajectories depicted in Figure \ref{fig:synthetic-rotation}. Similarly, by solving \eqref{eq:diff-eq-synthetic} with \(u(t) = \xi_i(t)\), for \(i = 1, 2, \dots, 9\) over equidistant points on \([0,1]\), and extracting the positions, we generate the translation plot shown in Figure \ref{fig:synthetic-translation}. These plots provide a clear visual representation of the varied rotational and translational paths used later in the analysis. The rotations are plotted on spheres, representing pure rotational movements.
+
+\newpage
+\begin{figure}
+    \centering
+    \foreach \i in {1,...,9} {
+        \begin{subfigure}{0.26\textwidth}
+            \includegraphics[width=\textwidth]{figures/syntetic_data/SO3_fig\i.png}
+            \caption{}
+            \label{fig:synthetic-SO3-fig\i}
+        \end{subfigure}
+        \ifnum\i=3
+            \par\medskip % start a new line after the third subfigure
+        \fi
+        \ifnum\i=6
+            \par\medskip % start a new line after the sixth subfigure
+        \fi
+    }
+    \caption[Visualization of Rotations from Synthetic Data]{Rotations generated from synthetic data using \eqref{eq:synthetic-data-rotation}. Each subfigure (a-i) shows the rotation of the initial vector \([0, 0, 1]\) governed by \eqref{eq:diff-eq-synthetic} with \(\hat{u}(t) = \hat{\omega}_i(t)\), evaluated over \([0, 1]\) with 100 time points. Subfigures (a-i) correspond to \(i = 1\) to \(i = 9\), respectively.}
+    \label{fig:synthetic-rotation}
+\end{figure}
+
+\newpage
+\begin{figure}
+    \centering
+    \foreach \i in {1,2,3,4,5,6,7,8,9} {
+        \begin{subfigure}[b]{0.3\textwidth}
+            \centering
+            \begin{tikzpicture}
+                \begin{axis}[
+                    height=4.5cm,
+                    width=5cm,
+                    xlabel=$x$, 
+                    ylabel=$y$, 
+                    zlabel=$z$,
+                    ytick=\empty,
+                    xtick=\empty,
+                    ztick=\empty
+                ]
+                    \addplot3+[
+                        mark options={red, mark size=0.5pt},
+                        only marks,
+                    ] table [col sep=comma, x=x, y=y, z=z] {figures/syntetic_data/SE3_t_\i.csv};
+                \end{axis}
+            \end{tikzpicture}
+            \caption{}
+        \end{subfigure}
+        \ifnum\i=3 \hspace{0pt}\par\fi % Line break after every third subfigure
+        \ifnum\i=6 \hspace{0pt}\par\fi
+    }
+    \caption[Visualization of Translations from Synthetic Data]{Translation part of the \(\mathrm{SE}(3)\) elements generated from synthetic data by solving \eqref{eq:diff-eq-synthetic} with the functions defined in \eqref{eq:synthetic-data-rotation} and \eqref{eq:synthetic-data-translation}. Each subfigure (a-i) illustrates the translation governed by \eqref{eq:diff-eq-synthetic} with \(\hat{u}(t) = \hat{\xi}_i(t)\), evaluated over \([0, 1]\) with 100 time points. Subfigures (a-i) correspond to \(i = 1\) to \(i = 9\), respectively.}
+    \label{fig:synthetic-translation}
+\end{figure}
+
+\FloatBarrier
+\subsubsection{Generate Synthetic Parameterizations}
+\label{subsubsec:generate-synthetic-parameterizations}
+
+We generate three distinct synthetic parameterizations, each created by \(\varphi(x) \in \mathrm{Diff}^+([0,1])\):
+
+\begin{equation}
+    \varphi(x) = x + F(x),
+\end{equation}
+where \(\varphi'(x) = 1 + F'(x) > 0\). The function \(F(x)\) is constructed using an orthogonal sine basis function \(\psi_n(x)\):
+
+\begin{equation}
+    \psi_n(x) = \frac{\sin(n \pi x)}{n \pi}, \quad n \in \mathbb{N}.
+\end{equation}
+
+These basis functions are orthogonal over \([0, 1]\) and vanish at the endpoints, making them suitable for weighted sums. Consequently, \(F(x)\) is represented as:
+
+\begin{equation}
+    F(x) = \sum_{n=1}^{M} w_n \psi_n(x) = \sum_{n=1}^{M} w_n \frac{\sin(n \pi x)}{n \pi},
+\end{equation}
+where \(w_n\) are the weights associated with each basis function. The derivative \(F'(x)\) is:
+
+\begin{equation}
+    F'(x) = \sum_{n=1}^{M} w_n \cos(n \pi x).
+\end{equation}
+
+Since each cosine term is bounded by 1, the derivative \(F'(x)\) satisfies:
+
+\begin{equation}
+    |F'(x)| \leq \|\mathbf{w}\|_1.
+\end{equation}
+
+Therefore, the derivative of \(\varphi(x)\) is:
+
+\begin{equation}
+    \varphi'(x) = 1 + \sum_{n=1}^{M} w_n \cos(n \pi x).
+\end{equation}
+
+To ensure \(\varphi'(x) > 0\), we scale \(F(x)\) by a factor \(\frac{1 - \epsilon}{\|\mathbf{w}\|_1}\), where \(\epsilon\) is a small positive number. This guarantees that the sum of the cosine terms is less than 1, ensuring \(\varphi'(x) > 0\):
+
+\begin{equation}
+    1 + \sum_{n=1}^{M} w_n \frac{1 - \epsilon}{\|\mathbf{w}\|_1} \cos(n \pi x) > 0.
+\end{equation}
+
+The synthetic parameterizations generated using this method are illustrated in Figure \ref{fig:synthetic-parameterizations}. For this, we set \(M = 4\), initialize the weights \(w_n\) with a normal distribution \(\mathcal{N}(0, 2)\), and use 100 equidistant steps with a tolerance of \(\epsilon = 10^{-8}\).
+
+\begin{figure}
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=0.7\textwidth,
+            height=0.5\textwidth,
+            xlabel={\( x \)},
+            ylabel={\( \varphi(x) \)},
+            grid=major,
+            grid style={dashed,gray!30},
+            legend style={at={(1.05,0.5)}, anchor=west},
+            line width=1pt,
+            xmin=0, xmax=1,
+            ymin=0, ymax=1
+        ]
+        \addplot [smooth, thick, red] table [x=x, y=varphi_1, col sep=comma] {figures/syntetic_data/parameterization/varphi_1.csv};
+        \addlegendentry{\( \varphi_1 \)}
+        \addplot [smooth, thick, blue] table [x=x, y=varphi_2, col sep=comma] {figures/syntetic_data/parameterization/varphi_2.csv};
+        \addlegendentry{\( \varphi_2 \)}
+        \addplot [smooth, thick, orange] table [x=x, y=varphi_3, col sep=comma] {figures/syntetic_data/parameterization/varphi_3.csv};
+        \addlegendentry{\( \varphi_3 \)}
+        \end{axis}
+    \end{tikzpicture}    
+    \caption[Visualization of the Synthetic Parameterizations]{Visualization of three distinct synthetic parameterizations generated by setting \(M = 4\), initializing the weights \(w_n\) with a normal distribution \(\mathcal{N}(0, 2)\), and using 100 equidistant steps with a tolerance of \(\epsilon = 10^{-8}\).}
+    \label{fig:synthetic-parameterizations}
+\end{figure}
+
+\FloatBarrier
+\subsubsection{Generate Synthetic Curves}
+\label{subsubsec:synthetic-curves}
+
+To evaluate our reparameterization framework, we generate synthetic curves by solving Equation \eqref{eq:diff-eq-synthetic} with the parameterizations \(\varphi_1, \varphi_2, \varphi_3\) described in Section \ref{subsubsec:generate-synthetic-parameterizations}, as well as an equidistant parameterization. This differential equation is solved using the functions defined in Equations \eqref{eq:synthetic-data-rotation} and \eqref{eq:synthetic-data-translation}, which provide \(u(t) = \omega_i(t)\) for \(\mathrm{SO}(3)\) elements and \(u(t) = \xi_i(t) = [\omega_i(t), v_i(t)]^T\) for \(\mathrm{SE}(3)\) elements, where \(i = 1,2,3\). This process creates single-element and three-element Cartesian curves, with each group comprising three shapes, each represented under four different parameterizations, yielding twelve curves per group.
+
+For multi-component groups \(\mathrm{SO}(3)^3\) and \(\mathrm{SE}(3)^3\), we define composite parameters:
+\begin{gather}
+    \omega_{i, i+1, i+2} = [\omega_i, \omega_{i+1}, \omega_{i+2}], \nonumber \\
+    \xi_{i, i+1, i+2} = \left[ \xi_i, \xi_{i+1}, \xi_{i+2} \right] = \left[ [\omega_i, v_i], [\omega_{i+1}, v_{i+1}], [\omega_{i+2}, v_{i+2}] \right] 
+\end{gather}
+for \(i \in \{1, 4, 7\}\).
+
+The idea is to create three interconnected curves that together form a single composite curve. These parameters are used to solve the differential equation under the same parameterizations, generating twelve curves per group. Each group of four curves shares identical geometric shapes, differentiated by parameterization.
+
+The notation for the curves is as follows: single-element curves are denoted \(c_i^j\), where \(i\) indicates the parameter used (\(\omega_i\) or \(\xi_i = [\omega_i, v_i]\)) and \(j\) the specific parameterization (\(\varphi_j\)). Curves generated using the equidistant parameterization are denoted as \(c_i^{\text{eq}}\). Cartesian curves are expressed as \(c_{i, i+1, i+2}^j\) for individual parameterizations and \(c_{i, i+1, i+2}^{\text{eq}}\) for the equidistant parameterization.

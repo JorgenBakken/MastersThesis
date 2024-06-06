@@ -1,0 +1,186 @@
+\section{Curves in \texorpdfstring{\(\mathrm{SO}(3)\)}{\mathrm{SO}(3)}}
+\label{chap:Curves-in-SO3}
+
+The special orthogonal group \(\mathrm{SO}(3)\) consists of all \(3 \times 3\) rotation matrices, rigorously defined by the conditions:
+
+\begin{equation}
+    \mathrm{SO}(3) = \{ R \in \mathbb{R}^{3 \times 3} \mid R^T R = I_3, \, \det(R) = 1 \},
+    \label{eq:SO3}
+\end{equation}
+where \(I_3\) represents the \(3 \times 3\) identity matrix and \(R^T\) denotes the transpose of \(R\). Matrices in \(\mathrm{SO}(3)\) characterize all proper rotations in \(\mathbb{R}^3\), defined by their orthogonality, unity determinant, and orientation preservation \cite{hallLieGroupsLie2015}.
+
+Following \cite{gallegoCompactFormulaDerivative2015,celledoniLieGroupIntegrators2022}, the Lie algebra associated with \(\mathrm{SO}(3)\), denoted by \(\mathfrak{so}(3)\), is the tangent space at the identity matrix \(I_3\). It contains all skew-symmetric matrices infinitesimally close to \(I_3\).
+
+%%% Hat and Vee Maps for SO(3) %%%
+
+To establish an isomorphism between \(\mathfrak{so}(3)\) and \(\mathbb{R}^3\), the hat map is introduced. For a vector \(\omega = [\omega_1, \omega_2, \omega_3]^T \in \mathbb{R}^3\), we associate a skew-symmetric matrix in \(\mathfrak{so}(3)\) via the hat map:
+
+\begin{equation}
+    \begin{aligned}
+        \wedge : \mathbb{R}^3 \rightarrow \mathfrak{so}(3), \\
+        \hat{\omega} = \begin{bmatrix} \omega_1 \\ \omega_2 \\ \omega_3 \end{bmatrix}^\wedge
+        =
+        \begin{bmatrix} 0 & -\omega_3 & \omega_2 \\ \omega_3 & 0 & -\omega_1 \\ -\omega_2 & \omega_1 & 0 \end{bmatrix}. 
+    \end{aligned}
+    \label{eq:hat_SO3}
+\end{equation}
+
+The vee map performs the inverse operation:
+
+\begin{equation}
+    \begin{aligned}
+        \vee : \mathfrak{so}(3) \rightarrow \mathbb{R}^3, \\
+        \omega = \hat{\omega}^\vee =
+        \begin{bmatrix} 0 & -\omega_3 & \omega_2 \\ \omega_3 & 0 & -\omega_1 \\ -\omega_2 & \omega_1 & 0 \end{bmatrix}^\vee
+        =
+        \begin{bmatrix} \omega_1 \\ \omega_2 \\ \omega_3 \end{bmatrix}.
+    \end{aligned}
+    \label{eq:vee_SO3}
+\end{equation}
+Consequently, for any \(\omega \in \mathbb{R}^3\), the identity \(\hat{\omega}^\vee = \omega\) holds true, affirming that the composition of the hat map followed by the vee map constitutes the identity mapping on \(\mathbb{R}^3\).
+
+%%% Exponential and Logarithm Maps for SO(3) %%%
+
+Rodrigues' rotation formula connects the matrix exponential map from the Lie algebra \(\mathfrak{so}(3)\) to the Lie group \(\mathrm{SO}(3)\) \cite{celledoniLieGroupMethods2003, maInvitation3DVision2004, gallegoCompactFormulaDerivative2015}:
+
+\begin{equation}
+    \begin{aligned}
+        \exp : \mathfrak{so}(3) \rightarrow \mathrm{SO}(3), \\
+        R = \exp(\hat{\omega}) = I_3 + \frac{\sin(\theta)}{\theta} \hat{\omega} + \frac{1 - \cos(\theta)}{\theta^2} \hat{\omega}^2,
+    \end{aligned}
+    \label{eq:exp_SO3}
+\end{equation}
+where \(\theta = \|\omega\|\) is the norm of the vector \(\omega\), representing the magnitude of rotation. This formula provides a direct method to convert a skew-symmetric matrix to a rotation matrix.
+
+For a rotation matrix \(R \in \mathrm{SO}(3)\), the rotation angle \(\theta\) can be retrieved by:
+
+\begin{equation}
+    \theta = \arccos\left(\frac{\text{trace}(R) - 1}{2}\right),
+\end{equation}
+which is used in the computation of the matrix logarithm map \cite{shingelInterpolationSpecialOrthogonal2009, gallegoCompactFormulaDerivative2015}:
+
+\begin{equation}
+    \begin{aligned}
+        \log : \mathrm{SO}(3) \rightarrow \mathfrak{so}(3), \\
+        \hat{\omega} = \log(R) = \frac{\theta}{2 \sin(\theta)} (R - R^T),
+    \end{aligned}
+    \label{eq:log_SO3}
+\end{equation}
+where we assume that \(\theta\) is not a multiple of \(\pi\) to avoid a singularity in the denominator.
+
+%%% Norm for SO(3) %%%
+
+The Frobenius norm is used to measure the magnitude of elements in $\mathfrak{so}(3)$, allowing direct comparison with the Euclidean norm in $\mathbb{R}^3$. The norms are related by:
+
+\begin{equation}
+    \frac{1}{2} \|\hat{\omega}\|^2_F = \frac{1}{2}\text{trace}(\hat{\omega}^T \hat{\omega}) = \omega_1^2 + \omega_2^2 + \omega_3^2 = \|\omega\|^2. 
+    \label{eq:norm_SO3}
+\end{equation}
+
+%%% Intro to SO(3)^d %%%
+
+This framework can be extended to \(\mathrm{SO}(3)^d\), the Cartesian product of \(d\) copies of \(\mathrm{SO}(3)\), defined as:
+
+\begin{equation}
+    \mathrm{SO}(3)^d = \{ (R_1, R_2, \dots, R_d) \mid R_i \in \mathrm{SO}(3), \, i=1,\dots,d \},
+\end{equation}
+where each \(R_i\) is a \(3 \times 3\) rotation matrix. This definition ensures that each component \(R_i\) is an independent \(3 \times 3\) rotation matrix, operating within its own three-dimensional space. The collection of these matrices forms a product group that encapsulates rotational motions in \(d\) independent three-dimensional spaces.
+
+The tangent space of the Cartesian product \(G \times G\) at the identity is isomorphic to the direct sum of the tangent spaces of \(G\) at each identity \cite{leeIntroductionSmoothManifolds2012}: 
+
+\begin{equation}
+    T_{(e,e)}(G \times G) \cong T_eG \oplus T_eG.
+    \label{eq:tangent-space-product-group}
+\end{equation}
+
+Since \(\mathrm{SO}(3)^d\) is a Cartesian product of \(d\) copies of \(\mathrm{SO}(3)\), its tangent space at the identity element, \((e, e, \dots, e)\), where \(e\) denotes the \(3 \times 3\) identity matrix, is isomorphic to the direct sum of the tangent spaces of each \(\mathrm{SO}(3)\) at the identity:
+
+\begin{equation}
+    T_{(e, e, \dots, e)}(\mathrm{SO}(3)^d) \cong \bigoplus_{i=1}^d T_e \mathrm{SO}(3).
+\end{equation}
+
+The Lie algebra of a Lie group is isomorphic to its tangent space at the identity. Therefore, for \(\mathrm{SO}(3)^d\), the corresponding Lie algebra, denoted \(\mathfrak{so}(3)^d\), is the direct sum of \(d\) copies of \(\mathfrak{so}(3)\):
+
+\begin{equation}
+    \mathfrak{so}(3)^d := \bigoplus_{i=1}^d \mathfrak{so}(3).
+\end{equation}
+Operations within \(\mathfrak{so}(3)^d\) are performed component-wise, allowing for the independent manipulation of each component. This extension enables the application of the matrix exponential and logarithm maps to \(\mathfrak{so}(3)^d\) by applying these maps to each component separately. This enables us to extend the matrix exponential map and the matrix logarithmic map to \(\mathfrak{so}(3)^d\) by applying them to each component of the input matrix.
+
+For an element \(\hat \omega^d = (\hat \omega_1, \hat \omega_2, \dots, \hat \omega_d) \in \mathfrak{so}(3)^d\), the matrix exponential map is defined as:
+
+\begin{equation}
+    \begin{aligned}
+        \exp : \mathfrak{so}(3)^d \rightarrow \mathrm{SO}(3)^d, \\
+        R^d = \exp(\hat \omega^d) = (\exp(\hat \omega_1), \exp(\hat \omega_2), \dots, \exp(\hat \omega_d)),
+    \end{aligned}
+    \label{eq:exp_SO3d}
+\end{equation}
+where \(\exp(\hat \omega_i)\) is the matrix exponential of the \(i\)-th component of \(\hat \omega^d\). The matrix logarithmic map is defined similarly:
+
+\begin{equation}
+    \begin{aligned}
+        \log : \mathrm{SO}(3)^d \rightarrow \mathfrak{so}(3)^d, \\
+        \hat \omega^d = \log(R^d) = (\log(R_1), \log(R_2), \dots, \log(R_d)),
+    \end{aligned}
+    \label{eq:log_SO3d}
+\end{equation}
+where \(\log(R_i)\) is the matrix logarithm of the \(i\)-th component of \(R^d\). These maps provide a direct method to convert skew-symmetric matrices to rotation matrices in \(\mathfrak{so}(3)^d\) and vice versa, facilitating independent operations on each component in a multi-body system.
+
+%%% Hat and vee maps for SO(3)^d %%%
+
+
+It is possible to extend the hat and vee maps, as defined in \eqref{eq:hat_SO3} and \eqref{eq:vee_SO3}, to \( \mathfrak{so}(3)^d \). The hat map is defined as:
+
+\begin{equation}
+    \begin{aligned}
+        \wedge : \mathbb{R}^{3d} \rightarrow \mathfrak{so}(3)^d, \\
+        \hat{\omega}^d = 
+        \begin{bmatrix}
+            \hat{\omega}_1 & 0 & \dots & 0 \\
+            0 & \hat{\omega}_2 & \dots & 0 \\
+            \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & \dots & \hat{\omega}_d
+        \end{bmatrix},
+    \end{aligned}
+    \label{eq:hat_SO3d}
+\end{equation}
+where \( \hat{\omega}_i \) is the skew-symmetric matrix associated with the \(i\)-th component of \( \omega^d \). The vee map is defined as:
+
+\begin{equation}
+    \begin{aligned}
+        \vee : \mathfrak{so}(3)^d \rightarrow \mathbb{R}^{3d}, \\
+        \omega^d = 
+        \begin{bmatrix}
+            \omega_{1,1} \\ \omega_{1,2} \\ \omega_{1,3} \\
+            \vdots \\
+            \omega_{d,1} \\ \omega_{d,2} \\ \omega_{d,3}
+        \end{bmatrix},
+    \end{aligned}
+    \label{eq:vee_SO3d}
+\end{equation}
+where \( \omega_i \) is the vector associated with the \(i\)-th component of \( \hat{\omega}^d \). These maps allow for the conversion of vectors in \( \mathbb{R}^{3d} \) to skew-symmetric matrices in \( \mathfrak{so}(3)^d \) and vice versa. This facilitates the manipulation of multi-body systems in a vectorized form, enhancing computational efficiency and providing clarity in handling complex rotational dynamics.
+
+%%% Norm for SO(3)^d %%%
+
+For the Cartesian product, we extend the Frobenius norm to \(\mathfrak{so}(3)^d\) by summing the squared Frobenius norms of each component:
+
+We define the norm on \(\hat{\omega}^d\) as:
+
+\begin{equation}
+    \|\hat{\omega}^d\|_F^2 
+    := 
+    \sum_{i=1}^d \|\hat{\omega}_i\|_F^2, 
+\end{equation}
+providing the following relation: 
+
+\begin{equation}
+    \frac{1}{2}\|\hat{\omega}^d\|_F^2 
+    = 
+    \frac{1}{2} \sum_{i=1}^d \text{trace}(\hat{\omega}_i^T \hat{\omega}_i)
+    =
+    \sum_{i=1}^d (\omega_{i,1}^2 + \omega_{i,2}^2 + \omega_{i,3}^2)
+    =
+    \|\omega^d\|_2^2, 
+    \label{eq:norm_SO3d}
+\end{equation}
+which relates the Frobenius norm of a skew-symmetric matrix in \( \mathfrak{so}(3)^d \) to the Euclidean norm of the corresponding vector in \( \mathbb{R}^{3d} \). 

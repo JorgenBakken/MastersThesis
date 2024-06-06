@@ -1,0 +1,60 @@
+\section{Analysis of SRVT}
+\label{chap:analysis-SRVT}
+
+Inspired by the work of Martin Bruveris \cite{bruverisOptimalReparametrizationsSquare2016}, we expand on the analysis of the Square Root Velocity Transform (SRVT) for curves in Lie matrix groups. Given a curve \(c: I \rightarrow G\), where \(G\) is a Lie matrix group (specifically \(SO(3)\) or \(SE(3)\)), we consider its transformation under a specific mapping \(\mathcal{R}\), defined as follows:
+
+\begin{equation}
+    \mathcal{R}: G \rightarrow \mathbb{R}^n, \quad \mathcal{R}(c) = \frac{c'}{\|c'\|},
+\end{equation}
+where \(c'\) denotes the derivative, of \(c\) with respect to its parameter. The SRVT is represented as a composition of two mappings:
+
+\begin{equation}
+    \mathcal{R} = V \circ \mathcal{S},
+\end{equation}
+where
+\begin{equation}
+\begin{aligned}
+V &: \mathbb{R}^n \rightarrow \mathbb{R}^n, \\
+V(x) &= \frac{x}{\sqrt{\|x\|}} = x \|x\|^{\frac{1}{2} - 1}, \, \forall \, x \in \mathbb{R}^n,
+\end{aligned}
+\end{equation}
+and
+\begin{equation}
+\begin{aligned}
+    \mathcal{S} &: G \rightarrow \mathbb{R}^n, \\
+    \mathcal{S}(c) &= c', \, \forall \, c \in G.
+\end{aligned}
+\end{equation}
+
+As established in \ref{app:alpha_holder_proof}, \(V\) is a \(\frac{1}{2}\)-Hölder continuous function, implying it adheres to the property:
+
+\begin{equation}
+    \|V(x) - V(y)\| \leq C \|x - y\|^{\frac{1}{2}}, \, \forall \, x, y \in \mathbb{R}^n,
+\end{equation}
+where \(C \in \mathbb{R}^+\) is a constant. Consequently, the SRVT's sensitivity to changes in the curve can be quantified as follows:
+
+\begin{equation}
+    \left\| \mathcal{R}(x) - \mathcal{R}(y) \right\|_{L^2} = \left\| V(x') - V(y') \right\|_{L^2} \leq C \left\| x' - y' \right\|^{\frac{1}{2}}_{L^2},
+\end{equation}
+illustrating that small variations in the input curve result in bounded changes in the transformed curve, as per the SRVT's \(\frac{1}{2}\)-Hölder continuity.
+
+Assume that \(c: I \rightarrow G\) is a continuously differentiable function, denoted as \(c \in C^1(I, G)\). This implies that its derivative \(c'\) is continuous across the interval \(I\), or \(c' \in C^0(I, G)\). Furthermore, if \(c'\) is Lipschitz continuous with a Lipschitz constant \(L\), then for all \(t_1, t_2 \in I\), the following inequality is satisfied:
+
+\begin{equation}
+\|c'(t_1) - c'(t_2)\|_{L^2} \leq L \|t_1 - t_2\|_{L^2},
+\end{equation}
+where \(\|\cdot\|\) denotes the Euclidean norm in \(\mathbb{R}^n\). This condition asserts that the rate of change of the function \(c\), as indicated by its derivative \(c'\), varies in a controlled manner across \(I\), with the magnitude of change in \(c'\) bounded linearly by the distance between any two points within \(I\).
+
+This implies
+
+\begin{equation}
+    \| \mathcal{R}(c)(t_1) - \mathcal{R}(c)(t_2) \|_{L^2} \leq C_L\|t_1 - t_2\|^{\frac{1}{2}}_{L^2},
+\end{equation}
+where \(C_L = C \cdot L\) is a constant. This inequality demonstrates that the SRVT's sensitivity to reparameterization is bounded by the reparameterization itself. In other words, the SRVT's response to changes in the curve is controlled by the rate of change of the curve.
+
+This follows directly from the results proven in \ref{app:alpha_holder_proof}, where we established the \(\alpha\)-Hölder continuity of the mapping \(V\). Specifically, the \(\frac{1}{2}\)-Hölder continuity of \(V\) ensures that:
+
+\begin{equation}
+    \| \mathcal{R}(c)(t_1) - \mathcal{R}(c)(t_2) \|_{L^2} \leq C_L \| t_1 - t_2 \|_{L^2}^{\frac{1}{2}},
+\end{equation}
+thereby validating the SRVT's controlled sensitivity to variations in the input curve.
